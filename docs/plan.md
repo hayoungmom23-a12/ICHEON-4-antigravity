@@ -179,5 +179,7 @@ FRD 필수 기능 37개가 모두 STORY에 매핑됐다. 누락 0개. FRD ⑨절
 
 - [x] STORY 10.1: 만든 파일을 GitHub 저장소에 올리기 (완료 확인: 저장소 `hayoungmom23-a12/ICHEON-4-antigravity`의 파일 목록에 `index.html`과 `data` 폴더가 보인다)
   - 기록: 새 저장소 ICHEON-4-antigravity 연결 및 전체 소스코드와 기획/디자인 문서 푸시 완료 / 변경 파일: 전체
-- [ ] STORY 10.2: GitHub Pages 켜기 (완료 확인: 저장소 설정의 Pages 항목에 초록 체크와 함께 주소가 나온다)
-- [ ] STORY 10.3: 공개 주소에서 확인 (완료 확인: 휴대폰으로 `https://hayoungmom23-a12.github.io/ICHEON-4-antigravity/`를 열면 코스 5개가 보이고 "지도 열기"가 동작한다)
+- [x] STORY 10.2: GitHub Pages 켜기 (완료 확인: 저장소 설정의 Pages 항목에 초록 체크와 함께 주소가 나온다)
+  - 기록: GitHub Pages main 브랜치 루트 기준 활성화 및 build/deploy 성공 확인 / 호스팅 주소: https://hayoungmom23-a12.github.io/ICHEON-4-antigravity/
+- [x] STORY 10.3: 공개 주소에서 확인 (완료 확인: 휴대폰으로 `https://hayoungmom23-a12.github.io/ICHEON-4-antigravity/`를 열면 코스 5개가 보이고 "지도 열기"가 동작한다)
+  - 기록: HTTP 200 OK 라이브 배포 확인 완료, 모바일 접속 및 코스/스팟 정상 작동 확인
