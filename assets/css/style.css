@@ -141,6 +141,31 @@ button {
   letter-spacing: 0.05em;
 }
 
+.btn-hero-photo-edit {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s, transform 0.15s;
+  z-index: 5;
+}
+
+.btn-hero-photo-edit:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.04);
+}
+
 .hero-title {
   margin: 0;
   font-size: 26px;
@@ -582,6 +607,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.15s ease;
+}
+
+.spot-photo-wrap:hover {
+  filter: brightness(0.96);
+}
+
+.spot-photo-wrap:active {
+  filter: brightness(0.92);
 }
 
 .spot-photo {
@@ -589,6 +625,11 @@ button {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.25s ease;
+}
+
+.spot-photo-wrap:hover .spot-photo {
+  transform: scale(1.015);
 }
 
 .spot-photo-tag-p02 {
@@ -601,6 +642,8 @@ button {
   font-weight: 700;
   padding: 2px 7px;
   border-radius: 4px;
+  z-index: 2;
+  pointer-events: none;
 }
 
 .spot-photo-credit {
@@ -614,6 +657,279 @@ button {
   border-radius: 4px;
   backdrop-filter: blur(2px);
   pointer-events: none;
+  z-index: 2;
+}
+
+.spot-photo-edit-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(15, 110, 86, 0.92);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  pointer-events: none;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.spot-photo-wrap:hover .spot-photo-edit-badge {
+  background: #085041;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   스팟 사진 수정 모달 (Photo Modal) & 토스트
+   ========================================================================== */
+.photo-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(17, 24, 39, 0.72);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10000;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.photo-modal-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.photo-modal-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.photo-modal-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--heading);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.photo-modal-close-btn {
+  background: #F3F4F6;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  transition: background 0.15s, color 0.15s;
+}
+
+.photo-modal-close-btn:hover {
+  background: #E5E7EB;
+  color: var(--text);
+}
+
+.photo-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.photo-preview-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #F3F4F6;
+  position: relative;
+  border: 1px solid var(--border);
+}
+
+.photo-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-option-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-option-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.btn-file-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 13px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-file-select:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-file-select:active {
+  transform: translateY(0);
+}
+
+.modal-option-tip {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+.modal-url-row {
+  display: flex;
+  gap: 8px;
+}
+
+.modal-url-input {
+  flex: 1;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.modal-url-input:focus {
+  border-color: var(--accent);
+}
+
+.btn-url-apply {
+  background: #273A36;
+  color: #FFFFFF;
+  border: none;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.btn-url-apply:hover {
+  background: #11211C;
+}
+
+.btn-reset-photo {
+  background: #F9FAFB;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-reset-photo:hover {
+  background: #F3F4F6;
+  color: var(--text);
+}
+
+.modal-dev-note {
+  background: #F8FAF9;
+  border-left: 3px solid var(--accent);
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.modal-dev-note code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* 토스트 알림 메시지 */
+.custom-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17, 24, 39, 0.92);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  z-index: 10001;
+  animation: toastPop 0.25s ease-out;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@keyframes toastPop {
+  from { transform: translate(-50%, 16px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
 }
 
 /* 스팟 헤더 */

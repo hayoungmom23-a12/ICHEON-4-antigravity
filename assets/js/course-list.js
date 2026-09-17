@@ -280,6 +280,164 @@
       }
       updateListUI();
     });
+
+    // 히어로 배너 배경 사진 기능 연동
+    setupHeroBannerPhoto();
+  }
+
+  // 히어로 배너 커스텀 배경 사진 관리
+  function setupHeroBannerPhoto() {
+    if (typeof document === 'undefined') return;
+    const heroBanner = document.getElementById('hero-banner');
+    const heroBtn = document.getElementById('btn-hero-photo');
+    if (!heroBanner || !heroBtn) return;
+
+    // 저장된 배경 사진 복원
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const savedBg = localStorage.getItem('hero_custom_bg');
+        if (savedBg) {
+          heroBanner.style.background = `linear-gradient(rgba(17, 33, 28, 0.65), rgba(17, 33, 28, 0.88)), url('${savedBg}') center/cover no-repeat`;
+        }
+      }
+    } catch (e) {}
+
+    heroBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openHeroPhotoModal(heroBanner);
+    });
+  }
+
+  function openHeroPhotoModal(heroBanner) {
+    if (typeof document === 'undefined') return;
+
+    const oldModal = document.getElementById('hero-photo-modal-backdrop');
+    if (oldModal) oldModal.remove();
+
+    const modalBackdrop = document.createElement('div');
+    modalBackdrop.className = 'photo-modal-backdrop';
+    modalBackdrop.id = 'hero-photo-modal-backdrop';
+
+    modalBackdrop.innerHTML = `
+      <div class="photo-modal-card" role="dialog" aria-modal="true">
+        <div class="photo-modal-header">
+          <h3 class="photo-modal-title">📷 히어로 배경 사진 변경</h3>
+          <button type="button" class="photo-modal-close-btn" id="hero-modal-close-btn" aria-label="닫기">✕</button>
+        </div>
+
+        <div class="photo-modal-body">
+          <p style="margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.5;">
+            메인 상단 히어로 배너에 원하는 이천 풍경이나 가족 여행 사진을 배경으로 넣을 수 있습니다.
+          </p>
+
+          <!-- 옵션 1: 기기 사진 선택 -->
+          <div class="modal-option-box">
+            <span class="modal-option-label">📱 내 기기에서 사진 선택 (스마트폰 앨범 / 카메라)</span>
+            <label class="btn-file-select" for="hero-file-input">
+              📁 배경 사진 파일 선택하기
+              <input type="file" id="hero-file-input" accept="image/*" style="display: none;">
+            </label>
+            <span class="modal-option-tip">선택한 사진은 현재 기기 브라우저에 안전하게 저장됩니다.</span>
+          </div>
+
+          <!-- 옵션 2: 웹 이미지 주소 -->
+          <div class="modal-option-box">
+            <label class="modal-option-label" for="hero-url-input">🔗 웹 이미지 주소(URL) 입력</label>
+            <div class="modal-url-row">
+              <input type="url" id="hero-url-input" placeholder="https://example.com/banner.jpg" class="modal-url-input">
+              <button type="button" id="hero-apply-url-btn" class="btn-url-apply">적용</button>
+            </div>
+          </div>
+
+          <!-- 옵션 3: 기본 그라데이션으로 복원 -->
+          <div class="modal-option-box">
+            <button type="button" id="hero-reset-btn" class="btn-reset-photo">
+              ↺ 기본 진초록 그라데이션으로 되돌리기
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalBackdrop);
+
+    function closeModal() {
+      if (modalBackdrop.parentNode) modalBackdrop.remove();
+    }
+
+    modalBackdrop.querySelector('#hero-modal-close-btn').addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', function (e) {
+      if (e.target === modalBackdrop) closeModal();
+    });
+
+    // 1. 파일 선택
+    const fileInput = modalBackdrop.querySelector('#hero-file-input');
+    fileInput.addEventListener('change', function (e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        const dataUrl = evt.target.result;
+        try {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('hero_custom_bg', dataUrl);
+          }
+        } catch (storageErr) {}
+
+        heroBanner.style.background = `linear-gradient(rgba(17, 33, 28, 0.65), rgba(17, 33, 28, 0.88)), url('${dataUrl}') center/cover no-repeat`;
+        showToast('✅ 히어로 배경 사진이 변경되었습니다!');
+        setTimeout(closeModal, 600);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // 2. URL 적용
+    const urlInput = modalBackdrop.querySelector('#hero-url-input');
+    const urlApplyBtn = modalBackdrop.querySelector('#hero-apply-url-btn');
+    urlApplyBtn.addEventListener('click', function () {
+      const url = urlInput.value.trim();
+      if (!url) return;
+
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('hero_custom_bg', url);
+        }
+      } catch (err) {}
+
+      heroBanner.style.background = `linear-gradient(rgba(17, 33, 28, 0.65), rgba(17, 33, 28, 0.88)), url('${url}') center/cover no-repeat`;
+      showToast('✅ 히어로 배경 사진이 적용되었습니다!');
+      setTimeout(closeModal, 600);
+    });
+
+    // 3. 기본 복원
+    const resetBtn = modalBackdrop.querySelector('#hero-reset-btn');
+    resetBtn.addEventListener('click', function () {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('hero_custom_bg');
+        }
+      } catch (err) {}
+
+      heroBanner.style.background = 'linear-gradient(180deg, var(--hero-top) 0%, var(--hero-bottom) 100%)';
+      showToast('기본 배경으로 복원되었습니다.');
+      setTimeout(closeModal, 600);
+    });
+  }
+
+  function showToast(message) {
+    if (typeof document === 'undefined') return;
+    const existing = document.querySelector('.custom-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'custom-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 2800);
   }
 
   window.initCourseList = initCourseList;

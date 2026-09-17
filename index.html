@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>이천 아이맵</title>
-  <link rel="stylesheet" href="assets/css/style.css?v=4">
+  <link rel="stylesheet" href="assets/css/style.css?v=5">
 </head>
 <body>
   <div class="app-container">
     <!-- F1.1 히어로 블록 (진초록 그라데이션) [01-코스목록.png 기준] -->
     <div class="hero-wrapper">
-      <header class="hero-banner">
+      <header class="hero-banner" id="hero-banner">
         <span class="hero-code-badge">P01</span>
+        <button type="button" class="btn-hero-photo-edit" id="btn-hero-photo" title="히어로 배경 사진 변경">📷 배경 사진 변경</button>
         <h1 class="hero-title">이천 아이맵</h1>
         <p class="hero-subtitle">아이와 이천, 출발 전에 주차장과 운영시간부터 확인하세요</p>
       </header>
@@ -26,9 +27,9 @@
     <div id="footer-container"></div>
   </div>
 
-  <script src="assets/js/data.js?v=4"></script>
-  <script src="assets/js/shared.js?v=4"></script>
-  <script src="assets/js/course-list.js?v=4"></script>
+  <script src="assets/js/data.js?v=5"></script>
+  <script src="assets/js/shared.js?v=5"></script>
+  <script src="assets/js/course-list.js?v=5"></script>
   <script>
     loadAppData().then(({ coursesData, spotsData, restaurantsData }) => {
       const mainEl = document.getElementById('main-content');

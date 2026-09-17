@@ -78,16 +78,32 @@
     // 초기 상태: 첫 번째 스팟은 펼침, 두 번째 스팟은 접힘
     const isExpanded = isFirst;
 
-    // 사진 구역 [F3.1, F3.11, F7.2, 02-코스상세.png 기준]
+    // 사진 구역 [F3.1, F3.11, F7.2, 02-코스상세.png 기준 + 클릭하여 사진 수정 기능]
     let photoHtml = '';
     if (photo && photo.file) {
-      const photoPath = `images/spots/${photo.file}`;
-      const creditText = photo.credit ? window.escapeHtml(photo.credit) : '';
+      const defaultPhotoPath = `images/spots/${photo.file}`;
+      let currentPhotoSrc = defaultPhotoPath;
+      let creditText = photo.credit ? window.escapeHtml(photo.credit) : '';
+
+      try {
+        if (typeof localStorage !== 'undefined') {
+          const savedPhoto = localStorage.getItem(`spot_custom_photo_${spotId}`);
+          if (savedPhoto) {
+            currentPhotoSrc = savedPhoto;
+            creditText = localStorage.getItem(`spot_custom_credit_${spotId}`) || '직접 등록한 사진';
+          }
+        }
+      } catch (e) {}
+
       photoHtml = `
-        <div class="spot-photo-wrap">
+        <div class="spot-photo-wrap" data-action="change-photo" data-spot-id="${spotId}" data-spot-name="${window.escapeHtml(spotName)}" data-default-src="${defaultPhotoPath}" data-default-credit="${window.escapeHtml(photo.credit || '')}" title="사진을 클릭하여 수정하기">
           <span class="spot-photo-tag-p02">P02</span>
-          <img src="${photoPath}" alt="${window.escapeHtml(photo.alt || spotName)}" class="spot-photo" onerror="this.style.display='none';">
-          ${creditText ? `<span class="spot-photo-credit">${creditText}</span>` : ''}
+          <img src="${currentPhotoSrc}" alt="${window.escapeHtml(photo.alt || spotName)}" class="spot-photo" id="spot-photo-img-${spotId}" onerror="this.style.display='none';">
+          ${creditText ? `<span class="spot-photo-credit" id="spot-photo-credit-${spotId}">${creditText}</span>` : ''}
+          <div class="spot-photo-edit-badge">
+            <span class="edit-badge-icon">📷</span>
+            <span class="edit-badge-text">사진 수정</span>
+          </div>
         </div>
       `;
     }
@@ -442,6 +458,204 @@
         if (targetPane) targetPane.classList.add('active');
         return;
       }
+
+      // 4. 스팟 사진 클릭하여 수정/변경
+      const photoTrigger = e.target.closest('[data-action="change-photo"]');
+      if (photoTrigger) {
+        e.stopPropagation();
+        const spotId = photoTrigger.getAttribute('data-spot-id');
+        const spotName = photoTrigger.getAttribute('data-spot-name') || '스팟';
+        const defaultSrc = photoTrigger.getAttribute('data-default-src') || '';
+        const defaultCredit = photoTrigger.getAttribute('data-default-credit') || '';
+        openPhotoEditModal(spotId, spotName, defaultSrc, defaultCredit);
+        return;
+      }
+    });
+  }
+
+  // 토스트 알림 띄우기
+  function showToast(message) {
+    if (typeof document === 'undefined') return;
+    const existing = document.querySelector('.custom-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.className = 'custom-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      if (toast.parentNode) toast.remove();
+    }, 2800);
+  }
+
+  // 스팟 사진 수정 모달 열기
+  function openPhotoEditModal(spotId, spotName, defaultSrc, defaultCredit) {
+    if (typeof document === 'undefined') return;
+
+    // 기존 열린 모달 제거
+    const oldModal = document.getElementById('photo-modal-backdrop');
+    if (oldModal) oldModal.remove();
+
+    // 현재 표시 중인 이미지 소스 확인
+    const targetImg = document.getElementById(`spot-photo-img-${spotId}`);
+    const currentSrc = targetImg ? targetImg.src : defaultSrc;
+
+    const modalBackdrop = document.createElement('div');
+    modalBackdrop.className = 'photo-modal-backdrop';
+    modalBackdrop.id = 'photo-modal-backdrop';
+
+    modalBackdrop.innerHTML = `
+      <div class="photo-modal-card" role="dialog" aria-modal="true">
+        <div class="photo-modal-header">
+          <h3 class="photo-modal-title">📷 ${window.escapeHtml(spotName)} 사진 변경</h3>
+          <button type="button" class="photo-modal-close-btn" id="modal-close-btn" aria-label="닫기">✕</button>
+        </div>
+
+        <div class="photo-modal-body">
+          <!-- 미리보기 -->
+          <div class="photo-preview-box">
+            <img id="modal-preview-img" src="${currentSrc}" alt="미리보기" class="photo-preview-img">
+          </div>
+
+          <!-- 옵션 1: 기기 사진 선택 (스마트폰 앨범 / 카메라) -->
+          <div class="modal-option-box">
+            <span class="modal-option-label">📱 내 기기에서 사진 선택 (스마트폰 앨범 / 카메라)</span>
+            <label class="btn-file-select" for="modal-file-input">
+              📁 사진 파일 선택하기
+              <input type="file" id="modal-file-input" accept="image/*" style="display: none;">
+            </label>
+            <span class="modal-option-tip">스마트폰에서는 사진첩 앨범 선택 또는 즉시 카메라 촬영이 가능합니다.</span>
+          </div>
+
+          <!-- 옵션 2: 웹 이미지 주소(URL) 입력 -->
+          <div class="modal-option-box">
+            <label class="modal-option-label" for="modal-url-input">🔗 웹 이미지 주소(URL) 입력</label>
+            <div class="modal-url-row">
+              <input type="url" id="modal-url-input" placeholder="https://example.com/photo.jpg" class="modal-url-input">
+              <button type="button" id="modal-apply-url-btn" class="btn-url-apply">적용</button>
+            </div>
+          </div>
+
+          <!-- 옵션 3: 기본 사진으로 초기화 -->
+          <div class="modal-option-box">
+            <button type="button" id="modal-reset-photo-btn" class="btn-reset-photo">
+              ↺ 기본 사진으로 되돌리기
+            </button>
+          </div>
+
+          <!-- 개발자 영구 배포 팁 -->
+          <div class="modal-dev-note">
+            <strong>💡 영구 배포 안내:</strong><br>
+            여기서 변경한 사진은 현재 기기 브라우저에 안전하게 저장됩니다. 모든 방문자에게 영구 반영하려면 PC의 <code>images/spots/</code> 폴더에 사진 파일을 넣고 GitHub에 푸시하시면 됩니다.
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modalBackdrop);
+
+    // 모달 닫기
+    function closeModal() {
+      if (modalBackdrop.parentNode) modalBackdrop.remove();
+    }
+
+    modalBackdrop.querySelector('#modal-close-btn').addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', function (e) {
+      if (e.target === modalBackdrop) closeModal();
+    });
+
+    // 1. 파일 선택 (FileReader)
+    const fileInput = modalBackdrop.querySelector('#modal-file-input');
+    fileInput.addEventListener('change', function (e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        const dataUrl = evt.target.result;
+        try {
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem(`spot_custom_photo_${spotId}`, dataUrl);
+            localStorage.setItem(`spot_custom_credit_${spotId}`, '직접 등록한 사진');
+          }
+        } catch (storageErr) {
+          console.warn('LocalStorage 용량 제한 등으로 화면에만 우선 반영됩니다:', storageErr);
+        }
+
+        // 모달 및 화면 즉시 갱신
+        const previewEl = modalBackdrop.querySelector('#modal-preview-img');
+        if (previewEl) previewEl.src = dataUrl;
+
+        const spotImg = document.getElementById(`spot-photo-img-${spotId}`);
+        if (spotImg) {
+          spotImg.src = dataUrl;
+          spotImg.style.display = 'block';
+        }
+        const creditEl = document.getElementById(`spot-photo-credit-${spotId}`);
+        if (creditEl) creditEl.textContent = '직접 등록한 사진';
+
+        showToast(`✅ ${spotName} 사진이 변경되었습니다!`);
+        setTimeout(closeModal, 600);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // 2. URL 적용
+    const urlInput = modalBackdrop.querySelector('#modal-url-input');
+    const urlApplyBtn = modalBackdrop.querySelector('#modal-apply-url-btn');
+    urlApplyBtn.addEventListener('click', function () {
+      const url = urlInput.value.trim();
+      if (!url) {
+        alert('이미지 주소(URL)를 입력해주세요.');
+        return;
+      }
+
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(`spot_custom_photo_${spotId}`, url);
+          localStorage.setItem(`spot_custom_credit_${spotId}`, '웹 이미지');
+        }
+      } catch (err) {}
+
+      const previewEl = modalBackdrop.querySelector('#modal-preview-img');
+      if (previewEl) previewEl.src = url;
+
+      const spotImg = document.getElementById(`spot-photo-img-${spotId}`);
+      if (spotImg) {
+        spotImg.src = url;
+        spotImg.style.display = 'block';
+      }
+      const creditEl = document.getElementById(`spot-photo-credit-${spotId}`);
+      if (creditEl) creditEl.textContent = '웹 이미지';
+
+      showToast(`✅ ${spotName} 사진이 적용되었습니다!`);
+      setTimeout(closeModal, 600);
+    });
+
+    // 3. 기본 사진으로 되돌리기
+    const resetBtn = modalBackdrop.querySelector('#modal-reset-photo-btn');
+    resetBtn.addEventListener('click', function () {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem(`spot_custom_photo_${spotId}`);
+          localStorage.removeItem(`spot_custom_credit_${spotId}`);
+        }
+      } catch (err) {}
+
+      const previewEl = modalBackdrop.querySelector('#modal-preview-img');
+      if (previewEl) previewEl.src = defaultSrc;
+
+      const spotImg = document.getElementById(`spot-photo-img-${spotId}`);
+      if (spotImg) {
+        spotImg.src = defaultSrc;
+        spotImg.style.display = 'block';
+      }
+      const creditEl = document.getElementById(`spot-photo-credit-${spotId}`);
+      if (creditEl) creditEl.textContent = defaultCredit || '';
+
+      showToast(`기본 사진으로 복원되었습니다.`);
+      setTimeout(closeModal, 600);
     });
   }
 
