@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>코스 상세 - 이천 아이맵</title>
+  <link rel="stylesheet" href="assets/css/style.css?v=4">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 메인 본문 영역 (코스 상세 정보 동적 렌더링) -->
+    <main class="main-content" id="main-content">
+      <div id="status-message" style="color: var(--text-2); font-size: 13px;">코스 정보를 불러오는 중입니다...</div>
+    </main>
+
+    <!-- 하단 공통 푸터 영역 [F5.1~F5.3, F6.2] -->
+    <div id="footer-container"></div>
+  </div>
+
+  <script src="assets/js/data.js?v=4"></script>
+  <script src="assets/js/shared.js?v=4"></script>
+  <script src="assets/js/course-detail.js?v=4"></script>
+  <script>
+    loadAppData().then((appData) => {
+      const mainEl = document.getElementById('main-content');
+      if (mainEl) {
+        initCourseDetailPage(mainEl, appData);
+      }
+      const footerEl = document.getElementById('footer-container');
+      if (footerEl) {
+        footerEl.innerHTML = renderFooter(appData.coursesData.asOf);
+      }
+    }).catch(err => {
+      console.error('Course detail data load error:', err);
+    });
+  </script>
+</body>
+</html>

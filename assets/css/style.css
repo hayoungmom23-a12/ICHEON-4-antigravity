@@ -1,0 +1,1080 @@
+/* ==========================================================================
+   이천 아이맵 (ICHEON EyeMap) 디자인 시스템 & 스타일시트
+   - 확정 시안 (design/01-코스목록.png, 02-코스상세.png, 03-하단안내.png) 1:1 완벽 구현
+   - 모바일 우선: 기준 폭 390px, PC 최대 640px 중앙 기둥 레이아웃
+   ========================================================================== */
+
+/* 1. 웹폰트: Pretendard */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+/* 2. 디자인 토큰 (CSS 변수) */
+:root {
+  /* 배경 및 테두리 (확정 시안 01-코스목록.png 기준 순백색 바탕) */
+  --bg: #FFFFFF;
+  --page-backdrop: #FFFFFF;       /* 시안 01~03과 동일한 순백색 바탕 */
+  --hero-top: #1F3A33;            /* 시안 01-코스목록.png 일치 다크 그린 상단 */
+  --hero-bottom: #11211C;         /* 시안 01-코스목록.png 일치 다크 그린 하단 */
+  --card: #FFFFFF;                /* 카드 배경 */
+  --border: #E6E0D4;              /* 카드 테두리, 구분선 */
+  --border-dashed: #D1C9BC;       /* 지도/약도 점선 테두리 */
+  --divider: #EEEAE2;             /* 항목 간 얇은 구분선 */
+  --box-bg: #F6F4EE;              /* 지도 자리, 약도 자리 배경 */
+  --photo: #EFECE6;               /* 사진 썸네일 플레이스홀더 배경 */
+
+  /* 글자 색상 */
+  --text: #1F2933;                /* 본문 텍스트 */
+  --text-2: #5C6470;              /* 보조 텍스트, 소제목 */
+  --text-3: #8B8374;              /* 옅은 안내 텍스트 */
+  --heading: #111827;             /* 제목, 코스명, 스팟명 */
+
+  /* 포인트 및 인터랙션 */
+  --accent: #0F6E56;              /* 주요 강조색 (시안 청록 그린) */
+  --accent-tile: #0E5E4A;         /* 하단 바깥 링크 타일 짙은 청록 */
+  --accent-bg: #E1F5EE;           /* 강조 배경 (켜진 탭/칩, 추천 주차장 띠) */
+  --accent-hover: #085041;        /* 버튼 및 링크 호버 색상 */
+
+  /* 취향 트랙 칩 전용 색상 (시안 01-코스목록.png 기준) */
+  --track-story-bg: #EEEDFE;      /* 이야기·문화 옅은 보라 */
+  --track-story: #3C3489;
+  --track-out-bg: #EAF3DE;        /* 야외 활동 옅은 초록 */
+  --track-out: #27500A;
+  --track-make-bg: #FAEEDA;       /* 만들기 옅은 주황 */
+  --track-make: #633806;
+
+  /* 글꼴 */
+  --font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* 모서리 반경 */
+  --radius-hero: 16px;
+  --radius-card: 16px;
+  --radius-btn-sm: 8px;
+  --radius-btn-lg: 10px;
+  --radius-tag: 6px;
+  --radius-pill: 999px;
+}
+
+/* 3. 기본 리셋 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--page-backdrop);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+}
+
+/* 4. 확정 시안 일치 중앙 기둥 레이아웃 [01-코스목록.png 기준] */
+.app-container {
+  width: 100%;
+  max-width: 860px;
+  min-height: 100vh;
+  background-color: var(--bg);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* 메인 본문 영역 여백 */
+.main-content {
+  padding: 20px 20px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1 0 auto;
+}
+
+/* 링크 및 버튼 기본 스타일 */
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* ==========================================================================
+   5. 히어로 블록 [01-코스목록.png 기준]
+   ========================================================================== */
+.hero-wrapper {
+  padding: 16px 20px 0;
+}
+
+.hero-banner {
+  position: relative;
+  background: linear-gradient(180deg, var(--hero-top) 0%, var(--hero-bottom) 100%);
+  border-radius: var(--radius-hero);
+  padding: 28px 24px;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.hero-code-badge {
+  background: rgba(0, 0, 0, 0.45);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+  letter-spacing: 0.05em;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ==========================================================================
+   6. 취향 트랙 알약 칩 (Track Pill)
+   ========================================================================== */
+.track-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.track-pill.track-story {
+  background-color: var(--track-story-bg);
+  color: var(--track-story);
+}
+
+.track-pill.track-out {
+  background-color: var(--track-out-bg);
+  color: var(--track-out);
+}
+
+.track-pill.track-make {
+  background-color: var(--track-make-bg);
+  color: var(--track-make);
+}
+
+/* ==========================================================================
+   7. 공통 섹션 소제목
+   ========================================================================== */
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+  margin: 0 0 10px 0;
+}
+
+/* ==========================================================================
+   8. 코스 요약 목록 ("코스 5개 한눈에") [01-코스목록.png 기준]
+   - 박스 테두리 없이 순백색 바탕 위 구분선 분할 리스트
+   - 84px 고정폭 트랙 알약 칩으로 코스명 시작 위치 완벽 열맞춤
+   ========================================================================== */
+.summary-card {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 2px;
+  text-decoration: none;
+  color: var(--text);
+  border-bottom: 1px solid var(--divider);
+  transition: background-color 0.15s;
+}
+
+.summary-item:last-child {
+  border-bottom: 1px solid var(--divider);
+}
+
+.summary-item:hover {
+  background-color: #FAFAF8;
+}
+
+.summary-item-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.summary-item-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.summary-item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.summary-item-region {
+  font-size: 13px;
+  color: var(--text-2);
+  min-width: 65px;
+  text-align: right;
+}
+
+.chevron-icon {
+  flex-shrink: 0;
+  stroke: #8B8374;
+}
+
+/* ==========================================================================
+   9. 취향 3택 필터 칩 ("아이 취향으로 고르기")
+   - 가로로 길쭉한 알약 타원형 캡슐 칩 (한 줄 텍스트)
+   ========================================================================== */
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  min-width: 96px;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #D1D5DB;
+  background-color: #FFFFFF;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.filter-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.filter-chip.active {
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   10. 코스 카드 5장 ("취향별 추천 코스 5개") [01-코스목록.png 기준]
+   ========================================================================== */
+.course-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(15, 110, 86, 0.08);
+}
+
+.course-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.course-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.region-text {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.course-card-title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.course-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--heading);
+  line-height: 1.3;
+}
+
+.rain-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: var(--radius-tag);
+  border: 1px solid #D1C9BC;
+  color: var(--text-2);
+  font-size: 11px;
+  background-color: #FFFFFF;
+}
+
+.course-subline {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   11. 지도 자리 상자 ("스팟 5곳 위치") [01-코스목록.png 기준]
+   ========================================================================== */
+.map-box-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.map-placeholder-box {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: var(--box-bg);
+  border: 1px dashed var(--border-dashed);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.map-pins-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.map-pin-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+}
+
+.map-box-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--heading);
+  margin: 0;
+}
+
+.map-box-desc {
+  font-size: 13px;
+  color: var(--text-3);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   12. 바깥 링크 타일 2개 ("이천시 공식 블로그", "이천관광 누리집") [01-코스목록.png 기준]
+   ========================================================================== */
+.external-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.external-link-card,
+.external-link-tile {
+  background-color: var(--accent-tile);
+  border-radius: var(--radius-card);
+  padding: 20px 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.external-link-card:hover,
+.external-link-tile:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.link-card-title,
+.link-tile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.3;
+}
+
+.link-card-desc,
+.link-tile-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   13. 코스 상세 화면 (Course Detail) [02-코스상세.png 기준]
+   ========================================================================== */
+.course-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 4px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  width: fit-content;
+}
+
+.back-link:hover {
+  color: var(--accent-hover);
+}
+
+.detail-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detail-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--heading);
+  line-height: 1.3;
+}
+
+.detail-intro {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* 스팟 간 연결 표시 */
+.spot-step-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-3);
+  font-weight: 500;
+  padding: 4px 0;
+}
+
+/* ==========================================================================
+   14. 스팟 카드 (Spot Card) [02-코스상세.png 기준]
+   ========================================================================== */
+.spot-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 대표 사진 영역 (16:9) */
+.spot-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: var(--photo);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spot-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.spot-photo-tag-p02 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.spot-photo-credit {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+
+/* 스팟 헤더 */
+.spot-card-header {
+  padding: 18px 20px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.spot-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spot-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.badge-star {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background-color: #FEF3C7;
+  color: #D97706;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.spot-toggle-text {
+  font-size: 13px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* 추천 주차장 띠 [02-코스상세.png 기준] */
+.parking-banner {
+  margin: 0 20px 14px;
+  background-color: #E8F5EE;
+  color: var(--accent);
+  border-radius: var(--radius-btn-sm);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.parking-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.parking-banner-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+/* 3분할 탭 메뉴 [02-코스상세.png 기준] */
+.spot-tabs-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 20px 16px;
+}
+
+.spot-tab-pill {
+  flex: 1;
+  height: 42px;
+  border-radius: 21px;
+  border: 1px solid #D1C9BC;
+  background-color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.spot-tab-pill.active {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* 이 코스에서 가는 곳 */
+.spot-going-wrap {
+  padding: 0 20px 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+  border-bottom: 1px solid var(--divider);
+}
+
+/* 상세 구역 컨테이너 */
+.spot-details-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-detail-section {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--divider);
+}
+
+.spot-detail-section:last-child {
+  border-bottom: none;
+}
+
+.detail-section-heading {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin: 16px 20px 10px;
+}
+
+/* 행 단위 아이템 (주차 안내, 추천 장소) */
+.detail-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--divider);
+}
+
+.detail-item-row:last-child {
+  border-bottom: none;
+}
+
+.detail-item-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* 카메라 썸네일 박스 [02-코스상세.png 기준] */
+.camera-thumb-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background-color: var(--photo);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #8B8374;
+  overflow: hidden;
+}
+
+.thumb-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-code {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.detail-item-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.item-title-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.item-main-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.item-bullet-line {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.arrow-symbol {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* 공통 채움 액션 버튼 [02-코스상세.png 기준] */
+.btn-action-fill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: var(--radius-btn-sm);
+  background-color: var(--accent);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.btn-action-fill:hover {
+  background-color: var(--accent-hover);
+  color: #FFFFFF;
+}
+
+/* 방문 팁 목록 [02-코스상세.png 기준] */
+.tip-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--divider);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.tip-row:last-child {
+  border-bottom: none;
+}
+
+.tip-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* 약도 구역 [02-코스상세.png 기준] */
+.sketch-section-wrap {
+  padding: 0 20px 20px;
+}
+
+.sketch-box {
+  background-color: var(--box-bg);
+  border: 1px dashed var(--border-dashed);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sketch-code-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.sketch-media {
+  width: 100%;
+  display: block;
+}
+
+.sketch-caption-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   15. 식당 부록 (Restaurant Annex) [02-코스상세.png 기준]
+   ========================================================================== */
+.restaurant-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.restaurant-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.restaurant-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.restaurant-notice {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.btn-big-map {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-btn-lg);
+  background-color: var(--accent-tile);
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.btn-big-map:hover {
+  background-color: var(--accent-hover);
+  color: #FFFFFF;
+}
+
+.recommended-restaurants-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.badge-recommended-restaurant {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background-color: #FEF3C7;
+  color: #D97706;
+  font-size: 12px;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.restaurant-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.restaurant-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--divider);
+}
+
+.restaurant-item-row:last-child {
+  border-bottom: none;
+}
+
+.restaurant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.restaurant-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--heading);
+}
+
+.restaurant-tip {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   16. 하단 공통 안내 (Footer) [03-하단안내.png 기준]
+   ========================================================================== */
+.app-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-2);
+  margin-top: auto;
+}
+
+.app-footer .footer-line.brand {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--heading);
+  margin-bottom: 4px;
+}

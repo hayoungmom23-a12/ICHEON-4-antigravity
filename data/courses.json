@@ -1,0 +1,117 @@
+{
+  "asOf": "2026-09-04",
+  "regions": [
+    "도심·설봉권",
+    "남부·모가권",
+    "서이천·마장권"
+  ],
+  "links": [
+    {
+      "name": "이천시 공식 블로그",
+      "desc": "축제·행사·실시간 소식",
+      "url": "https://blog.naver.com/2000happy_"
+    },
+    {
+      "name": "이천관광 누리집",
+      "desc": "이천시 문화관광 공식 안내",
+      "url": "https://www.icheon.go.kr/tour/index.do"
+    }
+  ],
+  "courses": [
+    {
+      "id": "seolbong-story",
+      "name": "설봉공원 이야기·문화 코스",
+      "region": "도심·설봉권",
+      "track": "story",
+      "rain": true,
+      "listLine": "설봉공원 · 위쪽 주차장 → 시립박물관·월전미술관·도자미술관",
+      "intro": "위쪽 주차장에 대고 시립박물관·월전미술관·도자미술관을 도는 실내 코스",
+      "spots": [
+        {
+          "id": "seolbong",
+          "parking": "위쪽 주차장에 대면 시립박물관·월전미술관·도자미술관이 가깝다",
+          "going": "시립박물관 · 월전미술관 · 도자미술관"
+        }
+      ],
+      "foodSearch": "이천 설봉공원 근처 식당"
+    },
+    {
+      "id": "seolbong-outdoor",
+      "name": "설봉공원 야외 활동 코스",
+      "region": "도심·설봉권",
+      "track": "out",
+      "rain": false,
+      "listLine": "설봉공원 · 아래쪽 주차장 → 놀이터·조각공원·호수 산책",
+      "intro": "아래쪽 주차장에 대고 놀이터·조각공원·호수 산책을 도는 코스",
+      "spots": [
+        {
+          "id": "seolbong",
+          "parking": "아래쪽 주차장에 대면 놀이터·조각공원이 가깝다",
+          "going": "놀이터 · 조각공원 · 호수 산책"
+        }
+      ],
+      "foodSearch": "이천 설봉공원 근처 식당"
+    },
+    {
+      "id": "south-make",
+      "name": "남부 만들기 코스",
+      "region": "남부·모가권",
+      "track": "make",
+      "rain": false,
+      "listLine": "이천목재문화체험장 → 이천농업테마공원 · 안내센터 옆 주차장",
+      "intro": "목재 만들기 체험을 한 뒤 농업테마공원 안내센터 옆 주차장에 대고 공원에서 논다",
+      "spots": [
+        {
+          "id": "wood",
+          "parking": "체험장 주차장에 대면 바로 체험동이다",
+          "going": "목재 만들기 체험"
+        },
+        {
+          "id": "farmpark",
+          "parking": "안내센터 옆 주차장에 대면 공원이 가깝다",
+          "going": "후문 쪽 공원"
+        }
+      ],
+      "foodSearch": "이천 모가면 근처 식당"
+    },
+    {
+      "id": "south-story",
+      "name": "남부 이야기·문화 코스",
+      "region": "남부·모가권",
+      "track": "story",
+      "rain": false,
+      "listLine": "이천농업테마공원 · 안내센터 옆 주차장 → 쌀문화전시관·라이스카페",
+      "intro": "안내센터 옆 주차장에 대고 쌀문화전시관과 라이스카페를 둘러본다",
+      "spots": [
+        {
+          "id": "farmpark",
+          "parking": "안내센터 옆 주차장에 대면 쌀문화전시관·라이스카페가 가깝다",
+          "going": "쌀문화전시관 · 라이스카페"
+        }
+      ],
+      "foodSearch": "이천농업테마공원 근처 식당"
+    },
+    {
+      "id": "west-outdoor",
+      "name": "서이천 야외 활동 코스",
+      "region": "서이천·마장권",
+      "track": "out",
+      "rain": false,
+      "listLine": "덕평공룡수목원(공룡 전시·동물·자연) → 이진상회(쌀 베이커리)",
+      "intro": "공룡수목원에서 놀고 이진상회 쌀 베이커리에서 쉰다",
+      "spots": [
+        {
+          "id": "dino",
+          "parking": "수목원 주차장에 대면 바로 입구다",
+          "going": "공룡 전시 · 동물 · 자연"
+        },
+        {
+          "id": "ijin",
+          "parking": "이진상회 주차장에 대면 바로 매장이다",
+          "going": "쌀 베이커리 · 도자 볼거리"
+        }
+      ],
+      "foodSearch": "이천 마장면 근처 식당"
+    }
+  ]
+}

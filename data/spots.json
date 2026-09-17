@@ -1,0 +1,252 @@
+[
+  {
+    "id": "seolbong",
+    "name": "설봉공원",
+    "photo": {
+      "file": "seolbong.jpg",
+      "alt": "설봉호와 설봉공원 전경",
+      "credit": "설봉호 · Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "takenOn": "2026-09-04"
+    },
+    "parkings": [
+      {
+        "name": "위쪽 주차장",
+        "walkTo": "시립박물관·월전미술관·도자미술관",
+        "entry": "공원 안 도로는 일방통행",
+        "mapQuery": "이천 설봉공원 주차장",
+        "mapBased": false,
+        "thumb": ""
+      },
+      {
+        "name": "아래쪽 주차장",
+        "walkTo": "놀이터·조각공원·호수 산책",
+        "entry": "공원 정문 진입 후 좌측 도로 방면",
+        "mapQuery": "이천 설봉공원 주차장",
+        "mapBased": false,
+        "thumb": ""
+      }
+    ],
+    "facilities": [
+      {
+        "name": "이천시립박물관",
+        "hours": "10:00~18:00 · 월요일 휴관 · 문의 031-633-9734",
+        "official": "https://www.artic.or.kr/icmus/main/view",
+        "mapQuery": "이천시립박물관",
+        "thumb": ""
+      },
+      {
+        "name": "월전미술관",
+        "hours": "10:00~18:00 · 월요일 휴관 · 문의 031-637-0032",
+        "official": "http://www.iwoljeon.org",
+        "mapQuery": "이천시립월전미술관",
+        "thumb": ""
+      },
+      {
+        "name": "도자미술관",
+        "hours": "10:00~18:00 (입장마감 17:00) · 월요일 휴관 · 문의 031-645-0730",
+        "official": "https://www.kocef.org",
+        "mapQuery": "이천도자미술관",
+        "thumb": ""
+      },
+      {
+        "name": "놀이터",
+        "hours": "상시 개방",
+        "official": "",
+        "mapQuery": "설봉공원 놀이터",
+        "thumb": ""
+      },
+      {
+        "name": "조각공원",
+        "hours": "상시 개방",
+        "official": "",
+        "mapQuery": "설봉공원 조각공원",
+        "thumb": ""
+      },
+      {
+        "name": "호수 산책",
+        "hours": "상시 개방",
+        "official": "",
+        "mapQuery": "",
+        "thumb": ""
+      }
+    ],
+    "tips": [
+      "운영: 공사 가림막이 있어도 개관 중일 수 있으니 공식 페이지를 먼저 본다",
+      "주차: 아래쪽 주차장에 대야 놀이터·조각공원이 가깝다. 위로 올라가면 미술관 쪽이다",
+      "진입: 공원 안 도로는 일방통행이다"
+    ],
+    "sketch": {
+      "file": "seolbong-map.png",
+      "caption": "설봉공원 입구에서 위쪽 주차장 및 주요 시설 진입 순서"
+    },
+    "checkedOn": "2026-09-04",
+    "checkedBy": "직접 답사"
+  },
+  {
+    "id": "farmpark",
+    "name": "이천농업테마공원",
+    "photo": {
+      "file": "farmpark.jpg",
+      "alt": "이천농업테마공원 전경",
+      "credit": "이천농업테마공원 공식",
+      "license": "공식 이미지",
+      "takenOn": "2026-09-04"
+    },
+    "parkings": [
+      {
+        "name": "안내센터 옆 주차장",
+        "walkTo": "쌀문화전시관·라이스카페",
+        "entry": "공원 정문 진입로 안내센터 방면",
+        "mapQuery": "이천농업테마공원 주차장",
+        "mapBased": true,
+        "thumb": ""
+      },
+      {
+        "name": "후문 주차장",
+        "walkTo": "후문 쪽 공원",
+        "entry": "후문 진입로 방면",
+        "mapQuery": "이천농업테마공원 후문",
+        "mapBased": true,
+        "thumb": ""
+      }
+    ],
+    "facilities": [
+      {
+        "name": "쌀문화전시관",
+        "hours": "09:30~18:30 (동절기 17:00) · 월요일 휴관 · 문의 031-632-6607",
+        "official": "https://www.2000farmpark.or.kr",
+        "mapQuery": "이천농업테마공원 쌀문화관",
+        "thumb": ""
+      },
+      {
+        "name": "라이스카페",
+        "hours": "10:00~18:00 · 월요일 휴무",
+        "official": "",
+        "mapQuery": "이천농업테마공원 라이스카페",
+        "thumb": ""
+      },
+      {
+        "name": "후문 쪽 공원",
+        "hours": "상시 개방",
+        "official": "",
+        "mapQuery": "",
+        "thumb": ""
+      }
+    ],
+    "tips": [
+      "아이: 쌀문화전시관 앞 잔디마당에서 아이와 가볍게 산책하기 좋다"
+    ],
+    "sketch": null,
+    "checkedOn": "2026-09-04",
+    "checkedBy": "직접 답사"
+  },
+  {
+    "id": "wood",
+    "name": "이천목재문화체험장",
+    "photo": {
+      "file": "wood.jpg",
+      "alt": "이천목재문화체험장 전경",
+      "credit": "이천목재문화체험장",
+      "license": "공식 이미지",
+      "takenOn": "2026-09-04"
+    },
+    "parkings": [
+      {
+        "name": "체험장 전용 주차장",
+        "walkTo": "체험동",
+        "entry": "체험동 진입로 앞 전용 주차 구역",
+        "mapQuery": "이천목재문화체험장",
+        "mapBased": false,
+        "thumb": ""
+      }
+    ],
+    "facilities": [
+      {
+        "name": "목재 만들기 체험",
+        "hours": "09:00~18:00 (체험 10시·14시 사전예약) · 월요일 휴관 · 문의 031-645-3851",
+        "official": "https://www.2000forest.or.kr",
+        "mapQuery": "이천목재문화체험장",
+        "thumb": ""
+      }
+    ],
+    "tips": [
+      "운영: 만들기 체험 프로그램은 회차별 예약 여부를 공식 사이트에서 먼저 확인해야 한다"
+    ],
+    "sketch": null,
+    "checkedOn": "2026-09-04",
+    "checkedBy": "직접 답사"
+  },
+  {
+    "id": "dino",
+    "name": "덕평공룡수목원",
+    "photo": {
+      "file": "dino.jpg",
+      "alt": "덕평공룡수목원 야외 공룡 전시",
+      "credit": "덕평공룡수목원 공식 (dinovill.com)",
+      "license": "공식 제공",
+      "takenOn": "2026-09-04"
+    },
+    "parkings": [
+      {
+        "name": "수목원 주차장",
+        "walkTo": "공룡 전시·동물·자연",
+        "entry": "매표소 앞 전용 주차장",
+        "mapQuery": "덕평공룡수목원 주차장",
+        "mapBased": false,
+        "thumb": ""
+      }
+    ],
+    "facilities": [
+      {
+        "name": "덕평공룡수목원",
+        "hours": "09:00~18:00 · 연중무휴 · 문의 031-633-5029",
+        "official": "https://www.dinovill.com",
+        "mapQuery": "덕평공룡수목원",
+        "thumb": ""
+      }
+    ],
+    "tips": [
+      "아이: 야외 공룡 모형이 움직이고 소리가 나므로 유아는 놀랄 수 있다"
+    ],
+    "sketch": null,
+    "checkedOn": "2026-09-04",
+    "checkedBy": "웹 조사"
+  },
+  {
+    "id": "ijin",
+    "name": "이진상회",
+    "photo": {
+      "file": "ijin.jpg",
+      "alt": "이진상회 복합문화공간 및 도자 갤러리",
+      "credit": "이진 도예 상회 · Wikimedia Commons",
+      "license": "CC BY-SA 2.0",
+      "takenOn": "2014-10-19"
+    },
+    "parkings": [
+      {
+        "name": "이진상회 주차장",
+        "walkTo": "쌀 베이커리·도자 볼거리",
+        "entry": "단지 진입 후 안내요원 안내",
+        "mapQuery": "이진상회 이천",
+        "mapBased": false,
+        "thumb": ""
+      }
+    ],
+    "facilities": [
+      {
+        "name": "이진상회",
+        "hours": "09:30~21:00 · 연중무휴",
+        "official": "",
+        "mapQuery": "이진상회",
+        "thumb": ""
+      }
+    ],
+    "tips": [
+      "식사: 쌀빵과 베이커리류가 인기이며 주말 오후에는 혼잡할 수 있다"
+    ],
+    "sketch": null,
+    "checkedOn": "2026-09-04",
+    "checkedBy": "직접 답사"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "courseId": "seolbong-story",
+    "searchQuery": "이천 설봉공원 근처 식당",
+    "list": [
+      {
+        "name": "푸주옥",
+        "tip": "아이와 함께 먹기 좋은 자극 없는 설렁탕과 도가니탕",
+        "mapQuery": "푸주옥 이천"
+      },
+      {
+        "name": "강민주의들밥 설봉점",
+        "tip": "정갈한 나물 반찬과 보리밥 한상, 가족 식사 추천",
+        "mapQuery": "강민주의들밥 설봉점"
+      },
+      {
+        "name": "최고당돈가스 이천관고점",
+        "tip": "아이들이 좋아하는 바삭한 수제 생돈가스",
+        "mapQuery": "최고당돈가스 이천관고점"
+      }
+    ]
+  },
+  {
+    "courseId": "seolbong-outdoor",
+    "searchQuery": "이천 설봉공원 근처 식당",
+    "list": [
+      {
+        "name": "푸주옥",
+        "tip": "아이와 함께 먹기 좋은 자극 없는 설렁탕과 도가니탕",
+        "mapQuery": "푸주옥 이천"
+      },
+      {
+        "name": "강민주의들밥 설봉점",
+        "tip": "정갈한 나물 반찬과 보리밥 한상, 가족 식사 추천",
+        "mapQuery": "강민주의들밥 설봉점"
+      },
+      {
+        "name": "최고당돈가스 이천관고점",
+        "tip": "아이들이 좋아하는 바삭한 수제 생돈가스",
+        "mapQuery": "최고당돈가스 이천관고점"
+      }
+    ]
+  },
+  {
+    "courseId": "south-make",
+    "searchQuery": "이천 모가면 근처 식당",
+    "list": []
+  },
+  {
+    "courseId": "south-story",
+    "searchQuery": "이천농업테마공원 근처 식당",
+    "list": []
+  },
+  {
+    "courseId": "west-outdoor",
+    "searchQuery": "이천 마장면 근처 식당",
+    "list": []
+  }
+]
