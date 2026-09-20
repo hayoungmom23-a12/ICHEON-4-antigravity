@@ -769,7 +769,7 @@ function migrateSketchUploads() {
 
 /* 이미지 클라이언트 압축 (가로/세로 비율 유지 및 고화질 경량화) */
 function compressImage(file, maxDimension, quality, callback, outputType) {
-  var maxLimit = maxDimension || 1080;
+  var maxLimit = maxDimension || 720;
   var reader = new FileReader();
   reader.onerror = function () {
     alert('파일을 읽는 중 오류가 발생했습니다.');
@@ -799,7 +799,7 @@ function compressImage(file, maxDimension, quality, callback, outputType) {
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, w, h);
       ctx.drawImage(img, 0, 0, w, h);
-      var dataUrl = canvas.toDataURL(outputType || 'image/jpeg', quality || 0.80);
+      var dataUrl = canvas.toDataURL(outputType || 'image/jpeg', quality || 0.75);
       callback(dataUrl);
     };
     img.src = e.target.result;
@@ -1453,7 +1453,7 @@ if (photoUploadInput) {
         }
         return;
       }
-      compressImage(files[idx], uploadMode === 'replace' ? 1440 : 1080, 0.80, function (dataUrl) {
+      compressImage(files[idx], uploadMode === 'replace' ? 1200 : 720, 0.75, function (dataUrl) {
         var saved = true;
         if (type === 'spot') {
           saved = addSpotExtraPhoto(target, dataUrl, '직접 등록한 사진');
