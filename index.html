@@ -1364,7 +1364,7 @@ function hoursHtml(hours) {
   return esc(m[1]) + ' · <span class="tel">' + esc(m[2]) + '</span>';
 }
 function tipParts(t) {
-  var m = t.match(/^(주차|진입|아이|운영|식사):\s*(.*)$/);
+  var m = t.match(/^(주차|진입|아이|운영|식사|화장실|유모차|꿀팁):\s*(.*)$/);
   return m ? { tag: m[1], text: m[2] } : { tag: null, text: t };
 }
 function facBtn(f) {
