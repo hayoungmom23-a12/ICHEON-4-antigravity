@@ -202,6 +202,8 @@ img{display:block}
 .btn-auto{margin-left:auto}
 .btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:2px;height:40px;width:80px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--accent);font-size:13px;font-weight:700;letter-spacing:-.02em;cursor:pointer;white-space:nowrap;flex-shrink:0}
 .btn-ghost:hover{border-color:var(--accent)}
+.btn-booking-green{display:inline-flex;align-items:center;justify-content:center;width:100%;min-width:186px;height:38px;border-radius:8px;background:#03C75A;color:#fff;font-size:13.5px;font-weight:800;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;box-shadow:0 1px 4px rgba(3,199,90,.3);transition:background .15s ease,transform .15s ease}
+.btn-booking-green:hover{background:#02b150;color:#fff;transform:translateY(-1px)}
 .note-map{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text-3);padding:0 0 10px}
 .fac-info{flex:1 1 160px;min-width:0;display:flex;flex-direction:column}
 .fac-name{font-size:15px;font-weight:700}
@@ -910,7 +912,7 @@ var FACILITY_MAP_DATA = {
 
   // 덕평공룡수목원
   '덕평공룡수목원': { lat: 37.23148, lng: 127.33795, placeId: '36505156', query: '덕평공룡수목원' },
-  '네이버 예약': { lat: 37.23148, lng: 127.33795, placeId: '36505156', query: '덕평공룡수목원' },
+  '공룡카페': { lat: 37.23148, lng: 127.33795, placeId: '36505156', query: '덕평공룡수목원' },
 
   // 이진상회
   '이진상회': { lat: 37.27901, lng: 127.40001, placeId: '37882200', query: '이진상회' }
@@ -1076,7 +1078,13 @@ function photoOf(key) {
 }
 function getSpotExtraPhotos(spotId) {
   var store = getCustomStore();
-  return ((publishedPhotos.spotExtras || {})[spotId] || []).concat((store.spotExtras || {})[spotId] || []);
+  var pub = (publishedPhotos.spotExtras || {})[spotId] || [];
+  var loc = (store.spotExtras || {})[spotId] || [];
+  var merged = pub.concat(loc);
+  if (store.deletedPhotos) {
+    merged = merged.filter(function (p) { return !store.deletedPhotos[p.src]; });
+  }
+  return merged;
 }
 function getKeyExtraPhotos(key) {
   if (!key) return [];
@@ -1135,7 +1143,7 @@ function resetCustomPhotos(spotId) {
   setCustomStore(store);
 }
 
-/* 개별 사진 선택 삭제 (B안) */
+/* 개별 사진 선택 삭제 (완전 삭제 및 슬라이드 동기화) */
 function deleteCustomPhoto(type, targetKey, item) {
   var store = getCustomStore();
   if (!item) return;
@@ -1152,6 +1160,8 @@ function deleteCustomPhoto(type, targetKey, item) {
       var pidx = parr.findIndex(function (p) { return p.src === item.src; });
       if (pidx !== -1) parr.splice(pidx, 1);
     }
+    store.deletedPhotos = store.deletedPhotos || {};
+    store.deletedPhotos[item.src] = true;
   } else if (item.type === 'spot-extra') {
     if (store.spotExtras && store.spotExtras[targetKey]) {
       var sarr = store.spotExtras[targetKey];
@@ -1164,16 +1174,24 @@ function deleteCustomPhoto(type, targetKey, item) {
       var spidx = sparr.findIndex(function (p) { return p.src === item.src; });
       if (spidx !== -1) sparr.splice(spidx, 1);
     }
+    store.deletedPhotos = store.deletedPhotos || {};
+    store.deletedPhotos[item.src] = true;
   } else if (item.type === 'key-single') {
     if (store.keys) delete store.keys[targetKey];
     if (publishedPhotos.keys) delete publishedPhotos.keys[targetKey];
+    store.deletedPhotos = store.deletedPhotos || {};
+    store.deletedPhotos[item.src] = true;
   } else if (item.type === 'base' || item.type === 'spot-base') {
     store.hiddenPhotos = store.hiddenPhotos || {};
     store.hiddenPhotos[item.key] = true;
+    if (store.keys && store.keys[item.key]) delete store.keys[item.key];
+    store.deletedPhotos = store.deletedPhotos || {};
+    store.deletedPhotos[item.src] = true;
   }
 
   setCustomStore(store);
   renderCurrent();
+  if (currentPm) renderPhotoManager();
 }
 
 /* 개별 사진 1:1 교체 (순서 유지) */
@@ -1274,7 +1292,7 @@ function getPhotosForTarget(type, targetKey, defaultKeys) {
       }
     });
   }
-  return list.slice(-4);
+  return list;
 }
 
 /* 사진 관리 팝업 모달 제어 */
@@ -1313,19 +1331,19 @@ function renderPhotoManager() {
 
   var photos = getPhotosForTarget(currentPm.type, currentPm.targetKey, currentPm.defaultKeys);
   titleEl.textContent = '📸 ' + currentPm.title + ' 사진 관리';
-  counterEl.textContent = photos.length + ' / 4장';
+  counterEl.textContent = photos.length + '장 등록됨';
 
   var html = '';
   photos.forEach(function (p, idx) {
     html += '<div class="pm-slot" title="' + esc(p.credit) + '">' +
       '<img src="' + esc(p.src) + '" alt="' + esc(p.credit) + '">' +
-      '<button type="button" class="pm-slot-del" data-pm-del="' + idx + '" title="이 사진 삭제">✕</button>' +
+      '<button type="button" class="pm-slot-del" data-pm-del="' + idx + '" title="이 사진 완전 삭제">✕</button>' +
       '<button type="button" class="pm-slot-replace" data-pm-replace="' + idx + '" title="이 사진을 다른 사진으로 1:1 교체">🔄 교체</button>' +
       '<span class="pm-slot-badge">' + (idx + 1) + '번째</span>' +
       '</div>';
   });
 
-  if (photos.length < 4) {
+  if (photos.length < 12) {
     html += '<button type="button" class="pm-slot pm-slot-add" id="btn-pm-add-slot" title="새 사진 추가하기">' +
       '<span class="pm-slot-add-icon">＋</span>' +
       '<span>사진 추가</span>' +
@@ -1333,7 +1351,8 @@ function renderPhotoManager() {
       '</button>';
   }
 
-  var remaining = 4 - photos.length - 1;
+  var minSlots = Math.max(4, Math.ceil((photos.length + 1) / 2) * 2);
+  var remaining = minSlots - photos.length - (photos.length < 12 ? 1 : 0);
   for (var i = 0; i < remaining; i++) {
     html += '<div class="pm-slot pm-slot-empty">' +
       '<span>빈 자리</span>' +
@@ -1455,24 +1474,34 @@ function tipParts(t) {
   return m ? { tag: m[1], text: m[2] } : { tag: null, text: t };
 }
 function facBtn(f, fmapKey, isFMapOpen) {
-  var btns = '';
+  var topBtns = '';
 
   // 1. 모든 추천 장소에 당당하게 표준 [지도 열기] / [지도 닫기] 버튼 필수 제공!
   if (fmapKey) {
-    btns += '<button type="button" class="btn btn-auto' + (isFMapOpen ? ' on' : '') + '" data-toggle-fmap="' + esc(fmapKey) + '">' +
+    topBtns += '<button type="button" class="btn btn-auto' + (isFMapOpen ? ' on' : '') + '" data-toggle-fmap="' + esc(fmapKey) + '">' +
       (isFMapOpen ? '지도 닫기' : '지도 열기') + '</button>';
   }
 
   // 2. 공식 홈페이지가 있는 경우 -> 보조 버튼으로 함께 제공
   if (f.official) {
-    var label = f.btnLabel || '공식 페이지';
+    var label = f.btnLabel || '홈페이지';
     var url = f.official.charAt(0) !== '[' ? f.official : '#';
-    btns += ' <a class="btn-ghost" href="' + esc(url) + '" target="_blank" rel="noopener" style="min-width:68px;padding:0 8px;">' + esc(label) + '</a>';
+    topBtns += ' <a class="btn-ghost" href="' + esc(url) + '" target="_blank" rel="noopener" style="min-width:68px;padding:0 8px;">' + esc(label) + '</a>';
   } else if (f.phone) {
-    btns += ' <a class="btn-ghost" href="tel:' + esc(f.phone.replace(/[^\d+]/g, '')) + '" style="min-width:54px;padding:0 8px;">전화</a>';
+    topBtns += ' <a class="btn-ghost" href="tel:' + esc(f.phone.replace(/[^\d+]/g, '')) + '" style="min-width:54px;padding:0 8px;">전화</a>';
   }
 
-  return btns;
+  // 3. 네이버 예약 링크가 있는 경우 -> 상단 두 버튼(지도열기+홈페이지) 길이와 동일한 길이(186px)의 녹색 버튼으로 배치
+  if (f.booking) {
+    return '<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;width:auto;">' +
+      '<div style="display:flex;gap:6px;">' + topBtns + '</div>' +
+      '<a class="btn-booking-green" href="' + esc(f.booking) + '" target="_blank" rel="noopener">' +
+        '<span style="font-weight:900;margin-right:5px;font-size:14px;">N</span> 네이버 예약' +
+      '</a>' +
+      '</div>';
+  }
+
+  return topBtns;
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -1577,11 +1606,13 @@ function renderDetail(course) {
 function spotCard(s, ref, i, total) {
   var open = !!state.expanded[i];
   var tips = (s.tips || []).map(tipParts);
-  var extraPhotos = getSpotExtraPhotos(ref.id);
-  var photoKeys = (s.photos && s.photos.length) ? s.photos : (s.photo ? [s.photo] : []);
-  var photoObjs = photoKeys.map(function (k) { return photoOf(k); }).filter(Boolean).concat(extraPhotos);
+  var photoObjs = getPhotosForTarget('spot', ref.id);
   var curSlide = (state.slide && state.slide[i]) || 0;
-  if (curSlide >= photoObjs.length) curSlide = 0;
+  if (curSlide >= photoObjs.length) {
+    curSlide = Math.max(0, photoObjs.length - 1);
+    state.slide = state.slide || {};
+    state.slide[i] = curSlide;
+  }
 
   var h = '<div class="spot-block"><div class="spot' + (open ? ' open' : '') + '" data-spot="' + i + '">';
 
@@ -2447,35 +2478,39 @@ fetch('data/published-photos.json', { cache: 'no-store' })
    네이버지도 · 키가 있을 때만 로드
    ───────────────────────────────────────────────────────── */
 function initMap() {
-  var mapBox = document.getElementById('naver-map');
-  var upperCanvas = document.getElementById('seolbong-upper-canvas');
-  var lowerCanvas = document.getElementById('seolbong-lower-canvas');
-  var facCanvases = document.querySelectorAll('.fac-map-canvas');
-  var fpParkCanvases = document.querySelectorAll('.farmpark-parking-canvas');
-  if (!mapBox && !upperCanvas && !lowerCanvas && (!facCanvases || !facCanvases.length) && (!fpParkCanvases || !fpParkCanvases.length)) return;
-
   function renderAllMaps() {
-    if (mapBox) drawMap(mapBox);
-    if (upperCanvas) drawSeolbongUpperMap('seolbong-upper-canvas');
-    if (lowerCanvas) drawSeolbongLowerMap('seolbong-lower-canvas');
-    if (facCanvases && facCanvases.length) {
-      facCanvases.forEach(function (fc) { drawFacilityMap(fc); });
+    var curMapBox = document.getElementById('naver-map');
+    if (curMapBox) drawMap(curMapBox);
+    if (document.getElementById('seolbong-upper-canvas')) drawSeolbongUpperMap('seolbong-upper-canvas');
+    if (document.getElementById('seolbong-lower-canvas')) drawSeolbongLowerMap('seolbong-lower-canvas');
+    var curFacs = document.querySelectorAll('.fac-map-canvas');
+    if (curFacs && curFacs.length) {
+      curFacs.forEach(function (fc) { drawFacilityMap(fc); });
     }
-    if (fpParkCanvases && fpParkCanvases.length) {
-      fpParkCanvases.forEach(function (fpc) { drawFarmparkParkingMap(fpc); });
+    var curFpParks = document.querySelectorAll('.farmpark-parking-canvas');
+    if (curFpParks && curFpParks.length) {
+      curFpParks.forEach(function (fpc) { drawFarmparkParkingMap(fpc); });
     }
   }
 
   if (window.naver && window.naver.maps) {
-    renderAllMaps();
+    setTimeout(renderAllMaps, 30);
     return;
   }
-  if (document.getElementById('naver-map-sdk')) return;
+
+  var existingScript = document.getElementById('naver-map-sdk');
+  if (existingScript) {
+    existingScript.addEventListener('load', function () {
+      setTimeout(renderAllMaps, 50);
+    });
+    return;
+  }
+
   var sc = document.createElement('script');
   sc.id = 'naver-map-sdk';
   sc.src = 'https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=' + NAVER_MAP_CLIENT_ID;
   sc.onload = function () {
-    renderAllMaps();
+    setTimeout(renderAllMaps, 50);
   };
   document.head.appendChild(sc);
 }

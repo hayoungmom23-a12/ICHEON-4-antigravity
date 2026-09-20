@@ -56,8 +56,8 @@ window.ICHEON_DATA = {
     dino: { name: '덕평공룡수목원', photo: 'dino', photos: ['dino', 'dino_model', 'dino_parking'],
       parkings: [{ name: '수목원 주차장', walkTo: '공룡 전시·동물·자연', entry: '수목원 정문 매표소 앞 넓은 전용 주차장', q: '덕평공룡수목원', mapBased: false, photo: 'dino_parking', photos: ['dino_parking', 'dino'] }],
       facilities: [
-        { name: '덕평공룡수목원', hours: '예약 필수 · 홈페이지 또는 네이버플레이스에서 확인 후 방문', official: 'https://dinovill.com/', photo: 'dino_model', photos: ['dino_model', 'dino'] },
-        { name: '네이버 예약', hours: '예약 후 방문', map: 'https://map.naver.com/p/entry/place/36505156?placePath=%2Fbooking', btnLabel: '네이버예약', photo: 'dino', photos: ['dino', 'dino_model'] }
+        { name: '덕평공룡수목원', hours: '09:00~18:00 (입장마감 17:00) · 연중무휴 · 031-633-5029', official: 'https://dinovill.com/', booking: 'https://map.naver.com/p/entry/place/36505156?lng=127.3379533&lat=37.2314807&placePath=%2Fticket%3Ffrom%3Dmap%26fromPanelNum%3D1%26additionalHeight%3D76%26timestamp%3D202609210445%26locale%3Dko%26svcName%3Dmap_pcv5&entry=plt&searchType=place&c=15.00,0,0,0,dh', photo: 'dino_model', photos: ['dino_model', 'dino'] },
+        { name: '공룡카페', hours: '수목원 온실 속 커피와 디저트 쉼터 · 09:00~18:00', photo: 'dino', photos: ['dino', 'dino_model'] }
       ],
       tips: [
         '주차: 매표소 정문 바로 앞 넓은 전용 평지 주차장을 무료로 이용할 수 있다',
