@@ -54,6 +54,8 @@ img{display:block}
 .hero-badge{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:999px;background:rgba(244,242,238,.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.45);color:var(--accent);font-size:12px;font-weight:700;line-height:1;box-shadow:0 2px 8px rgba(0,0,0,.18);align-self:flex-start;white-space:nowrap;margin-bottom:3px}
 .hero-txt h1{margin:0;font-size:34px;font-weight:700;color:#fff;line-height:1.2;letter-spacing:-.02em}
 .hero-txt p{margin:0;font-size:18px;color:#fff;line-height:1.45;max-width:30em}
+.hero-car-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.24);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.45);color:#fff;padding:1px 8px;border-radius:999px;font-size:13px;font-weight:700;letter-spacing:-.01em;vertical-align:middle;margin-left:6px;line-height:1.5;box-shadow:0 2px 6px rgba(0,0,0,.18);transform:translateY(-2px);white-space:nowrap}
+.hero-car-tag .car-icon{font-size:15px;line-height:1;display:inline-block}
 
 /* ── 코스 요약 목록 ─────────────────────────────────────── */
 .overview{display:flex;flex-direction:column;gap:6px}
@@ -378,6 +380,14 @@ body.admin-visible{padding-bottom:92px}
   .hero-txt p {
     font-size: 20px;
     line-height: 1.5;
+  }
+  .hero-car-tag {
+    font-size: 14.5px;
+    padding: 2px 10px;
+    margin-left: 8px;
+  }
+  .hero-car-tag .car-icon {
+    font-size: 17px;
   }
 
   /* 상단 코스 요약 */
@@ -1480,7 +1490,8 @@ function renderList() {
 
   h += '<div class="hero"><img src="' + esc(HERO_PHOTO) + '" alt="설봉호" title="설봉호 · Wikimedia Commons">' +
        '<div class="hero-txt"><span class="hero-badge">미취학 · 초등 저학년 추천 장소</span>' +
-       '<h1>이천 아이맵</h1><p>아이와 이천나들이,<br>주차장과 운영시간 먼저 체크하고 출발해요!</p></div></div>';
+       '<h1>이천 아이맵</h1><p>아이와 이천나들이,<span class="hero-car-tag"><span class="car-icon">🚗</span> (자동차여행)</span><br>' +
+       '주차장과 운영시간 먼저 체크하고 출발해요!</p></div></div>';
 
   h += '<div class="overview"><div class="sub">코스 5개 한눈에</div>' +
     COURSES.map(function (c) {
