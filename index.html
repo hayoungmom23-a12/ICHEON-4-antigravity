@@ -834,7 +834,7 @@ var PHOTO = {
   wood:                  { src: 'images/spots/wood.jpg', credit: '이천목재문화체험장 전경' },
   dino:                  { src: 'images/spots/dino.jpg', credit: '덕평공룡수목원 입구' },
   ijin:                  { src: 'images/spots/ijin.jpg', credit: '이진상회 복합문화공간' },
-  seolbongmap:           { src: 'images/maps/seolbong-map.png', credit: '설봉공원 안내 약도' },
+  seolbongmap:           { src: 'images/maps/seolbong-map.png?v=2', credit: '설봉공원 안내 약도' },
 
   // ── 실제 장소 실사 사진 (크롤링 및 수집 완료 에셋) ──────────────────
   // 설봉공원
@@ -1856,6 +1856,18 @@ document.addEventListener('click', function (e) {
   if (btnKeyUpload) {
     e.preventDefault(); e.stopPropagation();
     var keyId = btnKeyUpload.dataset.uploadKey;
+    var isReplace = !!btnKeyUpload.dataset.uploadReplace;
+    if (isReplace) {
+      var fiDirect = document.getElementById('photo-upload-input');
+      if (fiDirect) {
+        fiDirect.dataset.uploadType = 'key';
+        fiDirect.dataset.uploadTarget = keyId;
+        fiDirect.dataset.uploadMode = 'replace';
+        fiDirect.value = '';
+        fiDirect.click();
+      }
+      return;
+    }
     var itemTitle = btnKeyUpload.dataset.itemTitle || '';
     var defaultKeys = [];
     try { defaultKeys = JSON.parse(btnKeyUpload.dataset.defaultKeys || '[]'); } catch (err) {}
@@ -1997,7 +2009,7 @@ if (photoUploadInput) {
           }
         }
         processNext(idx + 1);
-      }, uploadMode === 'replace' && files[idx].type === 'image/png' ? 'image/png' : 'image/jpeg');
+      }, 'image/jpeg');
     }
     processNext(0);
   });
