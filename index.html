@@ -162,25 +162,32 @@ img{display:block}
 .sketch-box.has-photo{cursor:zoom-in;transition:transform .15s ease}
 .sketch-box.has-photo:hover{transform:scale(1.01)}
 
-/* ── 라이트박스 팝업 (전체화면 갤러리 뷰어) ───────────────── */
+/* ── 라이트박스 팝업 (와이드 슬라이드 갤러리 뷰어) ───────────────── */
 .lightbox{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .25s ease}
-.lb-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.lb-content{position:relative;z-index:1;width:100%;max-width:680px;height:100%;max-height:92vh;display:flex;flex-direction:column;padding:16px;box-sizing:border-box}
-.lb-header{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:4px 0 10px}
-.lb-titles{display:flex;align-items:center;gap:8px}
-.lb-title{font-size:16px;font-weight:700}
-.lb-counter{font-size:12px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.16);padding:2px 8px;border-radius:999px}
-.lb-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);border:0;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.lb-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.lb-content{position:relative;z-index:1;width:100%;max-width:760px;height:100%;max-height:94vh;display:flex;flex-direction:column;padding:12px;box-sizing:border-box}
+.lb-header{display:flex;justify-content:space-between;align-items:center;color:#fff;padding:4px 4px 10px}
+.lb-titles{display:flex;align-items:center;gap:8px;min-width:0}
+.lb-title{font-size:16px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-counter{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);background:rgba(255,255,255,.2);padding:3px 9px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.lb-close{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);border:0;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;flex-shrink:0}
 .lb-close:hover{background:rgba(255,255,255,.32)}
-.lb-body{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0;padding:8px 0}
-.lb-img-wrap{max-width:100%;max-height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.lb-img-wrap img{max-width:100%;max-height:72vh;object-fit:contain;border-radius:10px;box-shadow:0 12px 36px rgba(0,0,0,.6)}
-.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:1px solid rgba(255,255,255,.2);font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:background .2s}
-.lb-nav:hover{background:rgba(0,0,0,.8)}
-.lb-nav.prev{left:0}
-.lb-nav.next{right:0}
-.lb-footer{color:#fff;text-align:center;padding:8px 0 4px;font-size:13px;line-height:1.4}
-.lb-hint{display:block;font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.lb-body{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0;padding:4px 0}
+.lb-slider-viewport{position:relative;width:100%;height:100%;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:12px;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.lb-slider-track{display:flex;width:100%;height:100%;transition:transform .32s cubic-bezier(0.22, 1, 0.36, 1);will-change:transform}
+.lb-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:4px;box-sizing:border-box}
+.lb-slide img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:10px;box-shadow:0 12px 36px rgba(0,0,0,.6);-webkit-user-drag:none;pointer-events:none}
+.lb-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:68px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,.28);color:#1e293b;transition:background .18s ease,transform .18s ease,box-shadow .18s ease;padding:0;outline:none}
+.lb-nav-btn:hover{background:rgba(255,255,255,.98);transform:translateY(-50%) scale(1.04);box-shadow:0 6px 22px rgba(0,0,0,.36)}
+.lb-nav-btn:active{transform:translateY(-50%) scale(.96)}
+.lb-nav-btn.prev{left:10px}
+.lb-nav-btn.next{right:10px}
+.lb-progress-wrap{width:100%;max-width:280px;margin:8px auto 4px;display:flex;flex-direction:column;align-items:center}
+.lb-progress-track{width:100%;height:4px;background:rgba(255,255,255,.24);border-radius:999px;overflow:hidden;position:relative}
+.lb-progress-fill{position:absolute;top:0;left:0;height:100%;background:#ffffff;border-radius:999px;transition:transform .32s cubic-bezier(0.22, 1, 0.36, 1),width .25s ease}
+.lb-footer{color:#fff;text-align:center;padding:6px 0 2px;font-size:13px;line-height:1.4}
+.lb-caption{min-height:18px;font-weight:500;color:rgba(255,255,255,.92)}
+.lb-hint{display:block;font-size:11px;color:rgba(255,255,255,.55);margin-top:4px}
 .park-info{flex:1 1 160px;min-width:0;display:flex;flex-direction:column;flex-wrap:wrap;gap:2px;font-size:13px;line-height:1.5}
 .park-info b{font-weight:700}
 .arrow-line{display:flex;align-items:flex-start;gap:4px}
@@ -641,14 +648,20 @@ body.admin-visible{padding-bottom:92px}
     line-height: 1.6;
   }
 
-  /* 라이트박스: 1600px 고해상도 약도/사진 전체화면 뷰 */
+  /* 라이트박스: 1600px 고해상도 약도/사진 전체화면 와이드 슬라이더 뷰 */
   .lb-content {
-    max-width: 1100px;
-    max-height: 94vh;
+    max-width: 1000px;
+    max-height: 95vh;
   }
-  .lb-img-wrap img {
-    max-height: 82vh;
+  .lb-slide img {
+    max-height: 78vh;
   }
+  .lb-nav-btn {
+    width: 46px;
+    height: 76px;
+  }
+  .lb-nav-btn.prev { left: 16px; }
+  .lb-nav-btn.next { right: 16px; }
 
   /* 꿀팁 및 주의 박스 */
   .tip {
@@ -764,7 +777,7 @@ body.admin-visible{padding-bottom:92px}
   </div>
 </div>
 
-<!-- 라이트박스 팝업 모달 (A안 전체화면 확대 뷰어) -->
+<!-- 라이트박스 팝업 모달 (와이드 슬라이드 갤러리 뷰어) -->
 <div id="lightbox-modal" class="lightbox hidden" role="dialog" aria-modal="true">
   <div class="lb-backdrop" data-lb-close="1"></div>
   <div class="lb-content">
@@ -776,15 +789,24 @@ body.admin-visible{padding-bottom:92px}
       <button type="button" class="lb-close" data-lb-close="1" aria-label="닫기">✕</button>
     </div>
     <div class="lb-body">
-      <button type="button" class="lb-nav prev" id="lb-prev" aria-label="이전 사진">‹</button>
-      <div class="lb-img-wrap" data-lb-close="1">
-        <img id="lb-img" src="" alt="">
+      <div class="lb-slider-viewport" id="lb-viewport">
+        <button type="button" class="lb-nav-btn prev" id="lb-prev" aria-label="이전 사진">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="lb-slider-track" id="lb-track"></div>
+        <button type="button" class="lb-nav-btn next" id="lb-next" aria-label="다음 사진">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
-      <button type="button" class="lb-nav next" id="lb-next" aria-label="다음 사진">›</button>
     </div>
     <div class="lb-footer">
-      <div id="lb-caption"></div>
-      <span class="lb-hint">배경을 누르거나 ESC를 누르면 닫힙니다</span>
+      <div class="lb-progress-wrap" id="lb-progress-wrap">
+        <div class="lb-progress-track">
+          <div class="lb-progress-fill" id="lb-progress-fill"></div>
+        </div>
+      </div>
+      <div class="lb-caption" id="lb-caption"></div>
+      <span class="lb-hint">좌우 버튼 또는 터치 스와이프로 넘겨보세요 (ESC: 닫기)</span>
     </div>
   </div>
 </div>
@@ -1935,7 +1957,34 @@ document.addEventListener('click', function (e) {
     return;
   }
 
-  /* 썸네일 / 단일 사진 / 다중 사진 갤러리 / 약도 클릭 -> A안 라이트박스 팝업 오픈 */
+  /* 썸네일 / 단일 사진 / 다중 사진 갤러리 / 약도 클릭 -> 와이드 슬라이드 라이트박스 팝업 오픈 */
+  var lbGalTarget = e.target.closest('[data-lb-gallery]');
+  if (lbGalTarget) {
+    e.preventDefault(); e.stopPropagation();
+    var galId = lbGalTarget.dataset.lbGallery || '';
+    var galIdx = parseInt(lbGalTarget.dataset.lbIdx || '0', 10);
+    if (galId.indexOf('spot-') === 0) {
+      var spIdx = parseInt(galId.replace('spot-', ''), 10);
+      var course = currentCourse();
+      if (course && course.spots[spIdx]) {
+        var ref = course.spots[spIdx];
+        var sObj = SPOTS[ref.id];
+        if (sObj) {
+          var pKeys = (sObj.photos && sObj.photos.length) ? sObj.photos : (sObj.photo ? [sObj.photo] : []);
+          var baseList = pKeys.map(function (k) { return photoOf(k); }).filter(Boolean);
+          var extraList = getSpotExtraPhotos(ref.id);
+          var fullList = baseList.concat(extraList).map(function (po) {
+            return { src: po.src, caption: po.credit || sObj.name };
+          });
+          if (fullList.length > 0) {
+            openLightbox(fullList, galIdx, sObj.name);
+            return;
+          }
+        }
+      }
+    }
+  }
+
   var lbTarget = e.target.closest('[data-lb-src]');
   if (lbTarget) {
     e.preventDefault(); e.stopPropagation();
@@ -2083,15 +2132,23 @@ if (adminResetButton) adminResetButton.addEventListener('click', function () {
 });
 
 /* ─────────────────────────────────────────────────────────
-   라이트박스 모달 뷰어 제어 (A안)
+   라이트박스 모달 뷰어 제어 (와이드 슬라이더 캐러셀)
    ───────────────────────────────────────────────────────── */
 var lbState = { images: [], index: 0, title: '' };
 
 function openLightbox(images, index, title) {
   if (!images || !images.length) return;
   lbState.images = images;
-  lbState.index = index || 0;
+  lbState.index = (index >= 0 && index < images.length) ? index : 0;
   lbState.title = title || '';
+
+  var track = document.getElementById('lb-track');
+  if (track) {
+    track.innerHTML = lbState.images.map(function (img, i) {
+      return '<div class="lb-slide"><img src="' + esc(img.src) + '" alt="' + esc(img.caption || title || '') + '" loading="' + (i === lbState.index ? 'eager' : 'lazy') + '"></div>';
+    }).join('');
+  }
+
   updateLightboxView();
   var modal = document.getElementById('lightbox-modal');
   if (modal) {
@@ -2111,14 +2168,18 @@ function closeLightbox() {
 function updateLightboxView() {
   var cur = lbState.images[lbState.index];
   if (!cur) return;
-  var imgEl = document.getElementById('lb-img');
+  var track = document.getElementById('lb-track');
   var titleEl = document.getElementById('lb-title');
   var counterEl = document.getElementById('lb-counter');
   var capEl = document.getElementById('lb-caption');
   var prevBtn = document.getElementById('lb-prev');
   var nextBtn = document.getElementById('lb-next');
+  var progWrap = document.getElementById('lb-progress-wrap');
+  var progFill = document.getElementById('lb-progress-fill');
 
-  if (imgEl) { imgEl.src = cur.src; imgEl.alt = cur.caption || lbState.title; }
+  if (track) {
+    track.style.transform = 'translateX(-' + (lbState.index * 100) + '%)';
+  }
   if (titleEl) titleEl.textContent = lbState.title || cur.caption || '사진 확대';
   if (counterEl) {
     counterEl.textContent = lbState.images.length > 1 ? ((lbState.index + 1) + ' / ' + lbState.images.length) : '';
@@ -2127,6 +2188,12 @@ function updateLightboxView() {
   if (capEl) capEl.textContent = cur.caption || '';
   if (prevBtn) prevBtn.style.display = lbState.images.length > 1 ? 'flex' : 'none';
   if (nextBtn) nextBtn.style.display = lbState.images.length > 1 ? 'flex' : 'none';
+  if (progWrap) progWrap.style.display = lbState.images.length > 1 ? 'flex' : 'none';
+  if (progFill && lbState.images.length > 1) {
+    var pct = 100 / lbState.images.length;
+    progFill.style.width = pct + '%';
+    progFill.style.transform = 'translateX(' + (lbState.index * 100) + '%)';
+  }
 }
 
 function prevLightbox() {
@@ -2157,17 +2224,36 @@ window.addEventListener('keydown', function (e) {
   }
 });
 
-// 모바일 터치 스와이프 지원
+// 모바일 터치 스와이프 지원 (스팟 사진 & 라이트박스 와이드 슬라이더)
 var touchStartX = 0, touchStartY = 0;
+var lbTouchStartX = 0, lbTouchStartY = 0;
+
 document.addEventListener('touchstart', function (e) {
   var slider = e.target.closest('.spot-photo');
   if (slider) {
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
   }
+  var lbVp = e.target.closest('#lb-viewport');
+  if (lbVp) {
+    lbTouchStartX = e.touches[0].clientX;
+    lbTouchStartY = e.touches[0].clientY;
+  }
 }, { passive: true });
 
 document.addEventListener('touchend', function (e) {
+  var lbVp = e.target.closest('#lb-viewport');
+  if (lbVp && lbTouchStartX) {
+    var ldx = e.changedTouches[0].clientX - lbTouchStartX;
+    var ldy = e.changedTouches[0].clientY - lbTouchStartY;
+    if (Math.abs(ldx) > 40 && Math.abs(ldx) > Math.abs(ldy)) {
+      if (ldx < 0) nextLightbox();
+      else prevLightbox();
+    }
+  }
+  lbTouchStartX = 0;
+  lbTouchStartY = 0;
+
   var slider = e.target.closest('.spot-photo');
   if (slider && touchStartX) {
     var diffX = e.changedTouches[0].clientX - touchStartX;
