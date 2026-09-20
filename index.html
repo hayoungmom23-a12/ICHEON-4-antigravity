@@ -1537,7 +1537,7 @@ function renderDetail(course) {
   h += '</div>';
 
   document.getElementById('screen-detail').innerHTML = h;
-  if (document.getElementById('seolbong-upper-canvas') || document.getElementById('seolbong-lower-canvas') || document.querySelector('.fac-map-canvas')) {
+  if (document.getElementById('seolbong-upper-canvas') || document.getElementById('seolbong-lower-canvas') || document.querySelector('.fac-map-canvas') || document.querySelector('.farmpark-parking-canvas')) {
     initMap();
   }
 }
@@ -1626,7 +1626,8 @@ function spotCard(s, ref, i, total) {
       s.parkings.map(function (pk, j) {
         var isSeolbongUpper = (s.name === '설봉공원' && pk.name.indexOf('위쪽') !== -1);
         var isSeolbongLower = (s.name === '설봉공원' && pk.name.indexOf('아래쪽') !== -1);
-        var hasMultiPin = isSeolbongUpper || isSeolbongLower;
+        var isFarmparkPark = (s.name === '이천농업테마공원');
+        var hasMultiPin = isSeolbongUpper || isSeolbongLower || isFarmparkPark;
         var mapKey = i + '-pmap-' + j;
         var isMapOpen = !!state.parkingMapOpen && !!state.parkingMapOpen[mapKey];
         var mapUrl = pk.placeId ? ('https://map.naver.com/p/entry/place/' + pk.placeId) : nmap(pk.q);
@@ -1666,6 +1667,23 @@ function spotCard(s, ref, i, total) {
                 '<a href="https://map.naver.com/p/entry/place/19064752" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 제1주차장 길찾기</a>' +
                 '<a href="https://map.naver.com/p/entry/place/1772619651" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 제2주차장 길찾기</a>' +
                 '<a href="https://map.naver.com/p/entry/place/1004122729" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 카페옆 주차장 길찾기</a>' +
+              '</div>' +
+            '</div>';
+        } else if (isFarmparkPark && isMapOpen) {
+          var fpCanvasId = 'farmpark-parking-canvas-' + i + '-' + j;
+          mapBoxHtml = '<div class="park-map-wrap" style="margin:8px 0 12px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#FFFFFF;border-bottom:1px solid var(--divider);font-size:12px;font-weight:700;color:var(--heading);">' +
+                '<span style="display:flex;align-items:center;gap:5px;">' +
+                  '<span style="background:var(--accent);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:800;">🅿️ 핀 3개</span>' +
+                  '<span>농업테마공원 주차장 3곳 핀 위치</span>' +
+                '</span>' +
+                '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-size:11px;font-weight:700;">네이버지도 크게 보기 ↗</a>' +
+              '</div>' +
+              '<div id="' + fpCanvasId + '" class="farmpark-parking-canvas" style="height:250px;width:100%;background:#F1EDE4;"></div>' +
+              '<div style="display:flex;gap:6px;padding:8px 10px;background:#FFFFFF;border-top:1px solid var(--divider);flex-wrap:wrap;">' +
+                '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A2%85%ED%95%A9%EC%95%88%EB%82%B4%EC%84%BC%ED%84%B0" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 임시주차장 길찾기</a>' +
+                '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 생태2주차장 길찾기</a>' +
+                '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%ED%9B%84%EB%AC%B8" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 후문주차장(숙박) 길찾기</a>' +
               '</div>' +
             '</div>';
         }
@@ -2399,7 +2417,8 @@ function initMap() {
   var upperCanvas = document.getElementById('seolbong-upper-canvas');
   var lowerCanvas = document.getElementById('seolbong-lower-canvas');
   var facCanvases = document.querySelectorAll('.fac-map-canvas');
-  if (!mapBox && !upperCanvas && !lowerCanvas && (!facCanvases || !facCanvases.length)) return;
+  var fpParkCanvases = document.querySelectorAll('.farmpark-parking-canvas');
+  if (!mapBox && !upperCanvas && !lowerCanvas && (!facCanvases || !facCanvases.length) && (!fpParkCanvases || !fpParkCanvases.length)) return;
 
   function renderAllMaps() {
     if (mapBox) drawMap(mapBox);
@@ -2407,6 +2426,9 @@ function initMap() {
     if (lowerCanvas) drawSeolbongLowerMap('seolbong-lower-canvas');
     if (facCanvases && facCanvases.length) {
       facCanvases.forEach(function (fc) { drawFacilityMap(fc); });
+    }
+    if (fpParkCanvases && fpParkCanvases.length) {
+      fpParkCanvases.forEach(function (fpc) { drawFarmparkParkingMap(fpc); });
     }
   }
 
@@ -2620,6 +2642,51 @@ function drawFacilityMap(el) {
       window.open('https://map.naver.com/p/entry/place/' + placeId, '_blank');
     });
   }
+}
+
+function drawFarmparkParkingMap(el) {
+  if (!el || !window.naver || !window.naver.maps) return;
+  if (el.dataset.mapRendered) return;
+  el.dataset.mapRendered = '1';
+
+  var parkMap = new naver.maps.Map(el, {
+    center: new naver.maps.LatLng(37.17910, 127.44460),
+    zoom: 16,
+    minZoom: 14,
+    maxZoom: 19
+  });
+
+  var bounds = new naver.maps.LatLngBounds();
+
+  var PINS = [
+    { name: '임시주차장', url: 'https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A2%85%ED%95%A9%EC%95%88%EB%82%B4%EC%84%BC%ED%84%B0', pos: new naver.maps.LatLng(37.18040, 127.44470), align: 'translate(-50%,-100%)' },
+    { name: '생태2주차장', url: 'https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A3%BC%EC%B0%A8%EC%9E%A5', pos: new naver.maps.LatLng(37.18010, 127.44530), align: 'translate(-50%,0)' },
+    { name: '후문주차장', url: 'https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%ED%9B%84%EB%AC%B8', pos: new naver.maps.LatLng(37.17780, 127.44410), align: 'translate(-50%,-100%)' }
+  ];
+
+  PINS.forEach(function (pk) {
+    bounds.extend(pk.pos);
+    var pMarker = new naver.maps.Marker({
+      position: pk.pos,
+      map: parkMap,
+      title: pk.name,
+      zIndex: 30,
+      icon: {
+        content: '<div style="display:inline-flex;align-items:center;transform:' + pk.align + ';cursor:pointer;filter:drop-shadow(0 2px 5px rgba(0,0,0,0.3));">' +
+          '<div style="background:#0F6E56;border:2px solid #FFFFFF;color:#FFFFFF;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;line-height:1.2;white-space:nowrap;font-family:Pretendard,sans-serif;display:flex;align-items:center;gap:4px;">' +
+          '<span style="background:#FFFFFF;color:#0F6E56;font-size:10px;font-weight:900;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;line-height:1;">P</span>' +
+          '<span>' + esc(pk.name) + '</span></div>' +
+          '</div>',
+        anchor: new naver.maps.Point(0, 0)
+      }
+    });
+
+    naver.maps.Event.addListener(pMarker, 'click', function () {
+      window.open(pk.url, '_blank');
+    });
+  });
+
+  parkMap.fitBounds(bounds, { top: 35, right: 30, bottom: 35, left: 30 });
 }
 </script>
 </body>
