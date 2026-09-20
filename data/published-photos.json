@@ -11,6 +11,10 @@
     "ijin": {
       "src": "images/thumbs/custom_key_ijin.jpg",
       "credit": "직접 교체한 사진"
+    },
+    "wood_exterior": {
+      "src": "images/thumbs/custom_key_wood_exterior.jpg",
+      "credit": "직접 교체한 사진"
     }
   },
   "keyExtras": {},
