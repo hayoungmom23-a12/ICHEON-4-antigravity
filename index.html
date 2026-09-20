@@ -297,6 +297,40 @@ body.admin-visible{padding-bottom:92px}
 .pm-footer{padding:12px 18px 16px;display:flex;justify-content:flex-end;border-top:1px solid #EEEAE2}
 .btn-pm-done{width:100%;height:40px;font-size:14px;background:#0F6E56;border-radius:8px;color:#fff;font-weight:700;border:0;cursor:pointer;transition:background .2s}
 .btn-pm-done:hover{background:#085041}
+
+/* ── PC 화면 전용: 주차장 및 추천 장소 썸네일 황금 비율 확대 (약 1.7배: 96px) ── */
+@media (min-width: 600px) {
+  .row-in .thumb {
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+  }
+  .row-in .thumb-edit-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    top: 4px;
+    right: 4px;
+  }
+  .row-in .thumb-count-badge {
+    height: 20px;
+    font-size: 11px;
+    padding: 0 6px;
+    right: 4px;
+    bottom: 4px;
+  }
+  .row-in .thumb-zoom-hint {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    right: 4px;
+    bottom: 4px;
+  }
+  .row-in {
+    gap: 14px;
+    padding: 12px 0;
+  }
+}
 </style>
 </head>
 <body>
