@@ -864,16 +864,18 @@ var FACILITY_MAP_DATA = {
   '도자미술관': { lat: 37.27579, lng: 127.42513, placeId: '35118137', query: '경기도자미술관' },
   '호수 산책': { lat: 37.27690, lng: 127.42900, placeId: '19064752', query: '설봉호 둘레길' },
 
-  // 이천농업테마공원
-  '라이스카페': { lat: 37.17955, lng: 127.44490, placeId: '1007746408', query: '이천농업테마공원 라이스카페' },
-  '쌀문화전시관': { lat: 37.17910, lng: 127.44450, placeId: '19064971', query: '이천농업테마공원 쌀문화전시관' },
-  '유아숲놀이터': { lat: 37.17840, lng: 127.44520, placeId: '19064971', query: '이천농업테마공원 유아숲놀이터' },
-  '야외그림마당': { lat: 37.17880, lng: 127.44420, placeId: '19064971', query: '이천농업테마공원' },
+  // 이천농업테마공원 (첨부 지도 이미지 기준 실측 정밀 좌표)
+  '쌀문화전시관': { lat: 37.17815, lng: 127.44435, placeId: '19064971', query: '이천농업테마공원쌀문화전시관' },
+  '이천농업테마공원쌀문화전시관': { lat: 37.17815, lng: 127.44435, placeId: '19064971', query: '이천농업테마공원쌀문화전시관' },
+  '라이스카페': { lat: 37.17835, lng: 127.44470, placeId: '1007746408', query: '이천농업테마공원 라이스카페' },
+  '유아숲놀이터': { lat: 37.17770, lng: 127.44490, placeId: '19064971', query: '이천농업테마공원 유아숲놀이터' },
+  '야외그림마당': { lat: 37.17860, lng: 127.44450, placeId: '19064971', query: '이천농업테마공원' },
   '여름 물놀이터': { lat: 37.17880, lng: 127.44420, placeId: '19064971', query: '이천농업테마공원 물놀이터' },
   '후문 쪽 공원': { lat: 37.17720, lng: 127.44390, placeId: '19064971', query: '이천농업테마공원' },
 
   // 이천목재문화체험장
   '목재 만들기 체험': { lat: 37.17672, lng: 127.44355, placeId: '1047677943', query: '이천목재문화체험장' },
+  '이천목재문화체험장': { lat: 37.17672, lng: 127.44355, placeId: '1047677943', query: '이천목재문화체험장' },
 
   // 덕평공룡수목원
   '덕평공룡수목원': { lat: 37.23148, lng: 127.33795, placeId: '36505156', query: '덕평공룡수목원' },
@@ -1422,35 +1424,23 @@ function tipParts(t) {
   return m ? { tag: m[1], text: m[2] } : { tag: null, text: t };
 }
 function facBtn(f, fmapKey, isFMapOpen) {
-  var mapData = (typeof FACILITY_MAP_DATA !== 'undefined' && FACILITY_MAP_DATA[f.name]) || null;
-  var hasMap = !!(mapData || f.map || f.mapQuery);
-  var isPureMapBtn = !f.official && !f.phone && (hasMap || f.map || f.mapQuery || f.btnLabel === '지도 열기');
-
-  // '지도 열기'가 메인 버튼인 경우: 누르면 카드 아래 인라인 네이버 지도 토글
-  if (isPureMapBtn && fmapKey) {
-    return '<button type="button" class="btn btn-auto' + (isFMapOpen ? ' on' : '') + '" data-toggle-fmap="' + esc(fmapKey) + '">' +
-      (isFMapOpen ? '지도 닫기' : '지도 열기') + '</button>';
-  }
-
   var btns = '';
-  if (f.official) {
-    var label = f.btnLabel || '공식 페이지';
-    var url = f.official.charAt(0) !== '[' ? f.official : '#';
-    btns += '<a class="btn" href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>';
-    if (hasMap && fmapKey) {
-      btns += ' <button type="button" class="btn-ghost' + (isFMapOpen ? ' on' : '') + '" style="width:58px;height:40px;font-size:12px;" data-toggle-fmap="' + esc(fmapKey) + '">' +
-        (isFMapOpen ? '지도 닫기' : '지도') + '</button>';
-    }
-  } else if (f.phone) {
-    btns += '<a class="btn" href="tel:' + esc(f.phone.replace(/[^\d+]/g, '')) + '">전화</a>';
-    if (hasMap && fmapKey) {
-      btns += ' <button type="button" class="btn btn-auto' + (isFMapOpen ? ' on' : '') + '" data-toggle-fmap="' + esc(fmapKey) + '">' +
-        (isFMapOpen ? '지도 닫기' : '지도 열기') + '</button>';
-    }
-  } else if (hasMap && fmapKey) {
+
+  // 1. 모든 추천 장소에 당당하게 표준 [지도 열기] / [지도 닫기] 버튼 필수 제공!
+  if (fmapKey) {
     btns += '<button type="button" class="btn btn-auto' + (isFMapOpen ? ' on' : '') + '" data-toggle-fmap="' + esc(fmapKey) + '">' +
       (isFMapOpen ? '지도 닫기' : '지도 열기') + '</button>';
   }
+
+  // 2. 공식 홈페이지가 있는 경우 -> 보조 버튼으로 함께 제공
+  if (f.official) {
+    var label = f.btnLabel || '공식 페이지';
+    var url = f.official.charAt(0) !== '[' ? f.official : '#';
+    btns += ' <a class="btn-ghost" href="' + esc(url) + '" target="_blank" rel="noopener" style="min-width:68px;padding:0 8px;">' + esc(label) + '</a>';
+  } else if (f.phone) {
+    btns += ' <a class="btn-ghost" href="tel:' + esc(f.phone.replace(/[^\d+]/g, '')) + '" style="min-width:54px;padding:0 8px;">전화</a>';
+  }
+
   return btns;
 }
 
@@ -1720,7 +1710,10 @@ function spotCard(s, ref, i, total) {
         var fMoreKey = ref.id + '_fac_more_' + j;
         var mp = photoOf(fMoreKey);
 
-        var mapData = (typeof FACILITY_MAP_DATA !== 'undefined' && FACILITY_MAP_DATA[f.name]) || null;
+        var mapData = (typeof FACILITY_MAP_DATA !== 'undefined' && (FACILITY_MAP_DATA[f.name] || FACILITY_MAP_DATA[s.name])) || null;
+        if (!mapData && COORDS && COORDS[ref.id]) {
+          mapData = { lat: COORDS[ref.id][0], lng: COORDS[ref.id][1], query: f.name };
+        }
         var fMapBoxHtml = '';
         if (isFMapOpen && mapData) {
           var fCanvasId = 'fac-canvas-' + i + '-' + j;
