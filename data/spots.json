@@ -139,7 +139,10 @@
     "tips": [
       "아이: 쌀문화전시관 앞 잔디마당에서 아이와 가볍게 산책하기 좋다"
     ],
-    "sketch": null,
+    "sketch": {
+      "file": "farmpark-map.png",
+      "caption": "이천농업테마공원 종합안내도 (이천시설관리공단 제공)"
+    },
     "checkedOn": "2026-09-04",
     "checkedBy": "직접 답사"
   },
