@@ -1,5 +1,43 @@
 {
-  "keys": {},
+  "keys": {
+    "wood_interior": {
+      "src": "images/thumbs/custom_key_wood_interior.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "dino_model": {
+      "src": "images/thumbs/custom_key_dino_model.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "ijin": {
+      "src": "images/thumbs/custom_key_ijin.jpg",
+      "credit": "직접 교체한 사진"
+    }
+  },
   "keyExtras": {},
-  "spotExtras": {}
+  "spotExtras": {
+    "dino": [
+      {
+        "src": "images/thumbs/custom_spot_dino_extra_ab227223-3fdd-40ad-bb4c-8fa87242b249.jpg",
+        "credit": "직접 교체한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_spot_dino_extra_8d63c54d-401b-454b-ba87-b306964e9c07.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_spot_dino_extra_8a2667ec-14c2-4acd-9bfa-b0442ec6efcc.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "ijin": [
+      {
+        "src": "images/thumbs/custom_spot_ijin_extra_55989cab-30c7-480f-8008-ab63a2cfe468.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_spot_ijin_extra_722267f9-234e-4384-a36e-80c631552a38.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ]
+  }
 }
