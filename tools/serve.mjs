@@ -2,6 +2,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { handlePhotoPublish } from './photo-publish.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,8 +28,7 @@ const MIME_TYPES = {
 
 function createServer(port) {
   const server = http.createServer((req, res) => {
-    // Enable CORS and disable caching for seamless live editing
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Local preview; avoid exposing the publish endpoint to other devices.
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 
     try {
@@ -39,10 +39,17 @@ function createServer(port) {
         pathname += 'index.html';
       }
 
-      const filePath = path.join(ROOT_DIR, pathname);
+      if (req.method === 'POST' && pathname === '/api/save-and-push') {
+        handlePhotoPublish(req, res, ROOT_DIR, port);
+        return;
+      }
+
+
+      const filePath = path.resolve(ROOT_DIR, `.${pathname}`);
 
       // Prevent directory traversal
-      if (!filePath.startsWith(ROOT_DIR)) {
+      const relative = path.relative(ROOT_DIR, filePath);
+      if (relative.startsWith('..') || path.isAbsolute(relative) || relative.split(path.sep).some(part => part.startsWith('.'))) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end('403 Forbidden');
         return;
@@ -71,12 +78,15 @@ function createServer(port) {
     if (err.code === 'EADDRINUSE') {
       console.warn(`[미리보기 서버] 포트 ${port}번이 이미 사용 중입니다. 다음 포트 ${port + 1}번으로 시도합니다...`);
       createServer(port + 1);
+    } else if (err.code === 'EACCES' && port === DEFAULT_PORT) {
+      console.warn(`[미리보기 서버] 포트 ${port}번을 사용할 수 없어 12345번으로 시도합니다...`);
+      createServer(12345);
     } else {
       console.error('[미리보기 서버 오류]', err);
     }
   });
 
-  server.listen(port, () => {
+  server.listen(port, '127.0.0.1', () => {
     console.log(`=========================================`);
     console.log(` [이천 아이맵 로컬 미리보기 서버]`);
     console.log(` 주소: http://localhost:${port}`);

@@ -255,6 +255,48 @@ img{display:block}
 .edit-reset-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 4px 2px;font-size:11px;color:var(--text-3)}
 .btn-reset-link{color:var(--warn);background:none;border:0;padding:0;cursor:pointer;font-size:11px;text-decoration:underline}
 .badge-admin-mode{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:700}
+
+/* ── 플로팅 원클릭 깃허브 반영 관리자 바 ────────────────── */
+.admin-bar{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:560px;background:rgba(15,23,42,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:10px 14px;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:space-between;gap:10px;color:#fff;box-sizing:border-box}
+.admin-bar-info{display:flex;flex-direction:column;gap:2px;min-width:0}
+.admin-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;color:#34D399}
+.admin-stat{font-size:12px;color:rgba(255,255,255,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.btn-admin-push{display:inline-flex;align-items:center;gap:6px;background:#0F6E56;color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 6px rgba(15,110,86,.4);transition:all .2s ease;white-space:nowrap}
+.btn-admin-push:hover{background:#0b5442;transform:translateY(-1px)}
+.btn-admin-push:disabled{background:#475569;cursor:not-allowed;transform:none;opacity:.7}
+.btn-admin-reset{background:rgba(255,255,255,.12);color:#E2E8F0;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer;white-space:nowrap;transition:background .2s}
+.btn-admin-reset:hover{background:rgba(255,255,255,.22)}
+body.admin-visible{padding-bottom:92px}
+@media(max-width:430px){.admin-bar{align-items:stretch;flex-direction:column}.admin-actions{width:100%}.btn-admin-push{flex:1;justify-content:center}body.admin-visible{padding-bottom:128px}}
+
+/* ── B안: 사진 목록 관리 모달 (바둑판형 개별 선택 삭제 및 추가) ──────── */
+.pm-modal{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;padding:16px}
+.pm-modal.hidden{display:none!important}
+.pm-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.65);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.pm-dialog{position:relative;background:#FFFFFF;border-radius:16px;width:100%;max-width:380px;box-shadow:0 20px 40px rgba(0,0,0,.25);border:1px solid #E6E0D4;overflow:hidden;animation:pmPop .2s ease-out;display:flex;flex-direction:column;box-sizing:border-box}
+@keyframes pmPop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.pm-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid #EEEAE2;background:#FAF7F0}
+.pm-title-wrap{display:flex;align-items:center;gap:8px;min-width:0}
+.pm-title{font-size:15px;font-weight:700;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm-counter{font-size:12px;font-weight:700;color:#0F6E56;background:#E1F5EE;padding:2px 8px;border-radius:999px;flex-shrink:0}
+.pm-close-btn{background:none;border:0;font-size:18px;color:#8B8374;cursor:pointer;padding:4px;line-height:1;border-radius:6px}
+.pm-close-btn:hover{color:#111827;background:#EEEAE2}
+.pm-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.pm-guide{margin:0;font-size:12px;color:#5C6470;line-height:1.5}
+.pm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pm-slot{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#F1EDE4;border:1px solid #E6E0D4;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box}
+.pm-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pm-slot-del{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(220,38,38,.92);color:#fff;border:1.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;cursor:pointer;z-index:3;box-shadow:0 2px 4px rgba(0,0,0,.2);transition:transform .15s}
+.pm-slot-del:hover{transform:scale(1.12);background:#b91c1c}
+.pm-slot-badge{position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.65);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+.pm-slot-add{border:2px dashed #0F6E56;background:#F0FDF4;color:#0F6E56;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12px;font-weight:700;transition:all .2s;text-align:center;padding:8px}
+.pm-slot-add:hover{background:#DCFCE7;border-color:#085041}
+.pm-slot-add-icon{font-size:22px;line-height:1}
+.pm-slot-empty{border:1px dashed #D1D5DB;background:#F9FAFB;color:#9CA3AF;display:flex;align-items:center;justify-content:center;font-size:11px}
+.pm-footer{padding:12px 18px 16px;display:flex;justify-content:flex-end;border-top:1px solid #EEEAE2}
+.btn-pm-done{width:100%;height:40px;font-size:14px;background:#0F6E56;border-radius:8px;color:#fff;font-weight:700;border:0;cursor:pointer;transition:background .2s}
+.btn-pm-done:hover{background:#085041}
 </style>
 </head>
 <body>
@@ -265,6 +307,23 @@ img{display:block}
     <div class="f1">이천 아이맵 · 아이 동반 가족을 위한 출발 전 확인 카드</div>
     <p>운영 정보는 <span id="data-date">2026-09-04</span> 기준이며, 방문 전 각 시설의 공식 페이지에서 최신 정보를 확인해 주세요.</p>
     <p>'지도 기준' 표시가 있는 주차·진입 정보는 지도와 공개 자료를 바탕으로 정리한 것으로, 실제 현장과 다를 수 있습니다.</p>
+  </div>
+</div>
+
+<!-- 플로팅 관리자 원클릭 깃허브 반영 바 (편집 모드 시 노출) -->
+<div id="admin-bar" class="admin-bar hidden">
+  <div class="admin-bar-info">
+    <span class="admin-badge">🛠️ 현장 사진 편집 모드</span>
+    <span class="admin-stat" id="admin-photo-count" role="status" aria-live="polite">등록된 사진: 0장</span>
+  </div>
+  <div class="admin-actions">
+    <button type="button" class="btn-admin-push" id="btn-admin-push" title="로컬 미리보기 서버에서 사진 저장과 GitHub 반영을 실행합니다">
+      🚀 원클릭 깃허브 반영 및 저장
+    </button>
+    <button type="button" class="btn-admin-reset" id="btn-admin-reset-all" title="임시 등록된 사진 초기화">
+      ↺ 초기화
+    </button>
+  </div>
 </div>
 
 <!-- 라이트박스 팝업 모달 (A안 전체화면 확대 뷰어) -->
@@ -288,6 +347,27 @@ img{display:block}
     <div class="lb-footer">
       <div id="lb-caption"></div>
       <span class="lb-hint">배경을 누르거나 ESC를 누르면 닫힙니다</span>
+    </div>
+  </div>
+</div>
+
+<!-- 사진 관리 팝업 모달 (B안 바둑판형 개별 선택 삭제 및 추가) -->
+<div id="photo-manage-modal" class="pm-modal hidden" role="dialog" aria-modal="true">
+  <div class="pm-backdrop" data-pm-close="1"></div>
+  <div class="pm-dialog">
+    <div class="pm-header">
+      <div class="pm-title-wrap">
+        <span class="pm-title" id="pm-title">📸 사진 관리</span>
+        <span class="pm-counter" id="pm-counter">(0 / 4장)</span>
+      </div>
+      <button type="button" class="pm-close-btn" data-pm-close="1" aria-label="닫기">✕</button>
+    </div>
+    <div class="pm-body">
+      <p class="pm-guide">등록된 사진 중 지우고 싶은 사진의 <b style="color:#DC2626;">✕</b> 버튼을 누르거나, <b>[+ 사진 추가]</b>를 눌러 새 사진을 등록하세요 (최대 4장).</p>
+      <div class="pm-grid" id="pm-grid"></div>
+    </div>
+    <div class="pm-footer">
+      <button type="button" class="btn btn-pm-done" data-pm-close="1">완료</button>
     </div>
   </div>
 </div>
@@ -411,31 +491,62 @@ function getCustomStore() {
     return JSON.parse(localStorage.getItem('icheon_custom_photos') || '{}');
   } catch (e) { return {}; }
 }
+var publishedPhotos = { keys: {}, keyExtras: {}, spotExtras: {} };
+var isPublishing = false;
+function localPhotoCount(store) {
+  return Object.keys(store.keys || {}).length +
+    Object.values(store.keyExtras || {}).reduce(function (n, list) { return n + list.length; }, 0) +
+    Object.values(store.spotExtras || {}).reduce(function (n, list) { return n + list.length; }, 0);
+}
+function updateAdminBar(message) {
+  var bar = document.getElementById('admin-bar');
+  var button = document.getElementById('btn-admin-push');
+  var stat = document.getElementById('admin-photo-count');
+  if (!bar || !button || !stat) return;
+  var editing = isEditMode();
+  bar.classList.toggle('hidden', !editing);
+  document.body.classList.toggle('admin-visible', editing);
+  if (!editing) return;
+  var pending = localPhotoCount(getCustomStore());
+  var published = localPhotoCount(publishedPhotos);
+  var localServer = /^https?:$/.test(location.protocol) && /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  button.disabled = isPublishing || !localServer || pending === 0;
+  stat.textContent = message || ('등록된 사진: ' + (published + pending) + '장 · 반영 대기: ' + pending + '장' +
+    (localServer ? '' : ' · 저장은 로컬 미리보기 서버에서 가능합니다'));
+}
 function setCustomStore(store) {
   try {
     localStorage.setItem('icheon_custom_photos', JSON.stringify(store));
-  } catch (e) { console.warn('LocalStorage save failed', e); }
+  } catch (e) {
+    console.warn('LocalStorage save failed', e);
+    updateAdminBar('사진 저장 공간이 부족합니다. 다른 임시 사진을 반영하거나 초기화한 뒤 다시 선택해 주세요.');
+    return false;
+  }
+  updateAdminBar();
+  return true;
 }
 function photoOf(key) {
   if (!key) return null;
   var store = getCustomStore();
+  if (store.hiddenPhotos && store.hiddenPhotos[key]) return null;
   if (store.keys && store.keys[key]) return store.keys[key];
+  if (publishedPhotos.keys && publishedPhotos.keys[key]) return publishedPhotos.keys[key];
   return PHOTO[key] || null;
 }
 function getSpotExtraPhotos(spotId) {
   var store = getCustomStore();
-  return (store.spotExtras && store.spotExtras[spotId]) ? store.spotExtras[spotId] : [];
+  return ((publishedPhotos.spotExtras || {})[spotId] || []).concat((store.spotExtras || {})[spotId] || []);
 }
 function getKeyExtraPhotos(key) {
   if (!key) return [];
   var store = getCustomStore();
-  return (store.keyExtras && store.keyExtras[key]) ? store.keyExtras[key] : [];
+  return ((publishedPhotos.keyExtras || {})[key] || []).concat((store.keyExtras || {})[key] || []);
 }
 function saveKeyPhoto(key, src, credit) {
   var store = getCustomStore();
   store.keys = store.keys || {};
   store.keys[key] = { src: src, credit: credit || '직접 등록한 사진' };
-  setCustomStore(store);
+  return setCustomStore(store);
 }
 function addKeyExtraPhoto(key, src, credit) {
   var store = getCustomStore();
@@ -446,7 +557,7 @@ function addKeyExtraPhoto(key, src, credit) {
     store.keyExtras[key].shift();
   }
   store.keyExtras[key].push({ src: src, credit: credit || '직접 추가한 사진' });
-  setCustomStore(store);
+  return setCustomStore(store);
 }
 function addSpotExtraPhoto(spotId, src, credit) {
   var store = getCustomStore();
@@ -456,7 +567,7 @@ function addSpotExtraPhoto(spotId, src, credit) {
     store.spotExtras[spotId].shift();
   }
   store.spotExtras[spotId].push({ src: src, credit: credit || '직접 추가한 사진' });
-  setCustomStore(store);
+  return setCustomStore(store);
 }
 function resetCustomPhotos(spotId) {
   var store = getCustomStore();
@@ -472,29 +583,223 @@ function resetCustomPhotos(spotId) {
         if (k.indexOf(spotId) === 0) delete store.keyExtras[k];
       });
     }
+    if (store.hiddenPhotos) {
+      Object.keys(store.hiddenPhotos).forEach(function (k) {
+        if (k.indexOf(spotId) === 0) delete store.hiddenPhotos[k];
+      });
+    }
   } else {
     store = {};
   }
   setCustomStore(store);
 }
 
-/* 이미지 클라이언트 압축 (LocalStorage 5MB 한도 방지) */
-function compressImage(file, maxWidth, quality, callback) {
+/* 개별 사진 선택 삭제 (B안) */
+function deleteCustomPhoto(type, targetKey, item) {
+  var store = getCustomStore();
+  if (!item) return;
+
+  if (item.type === 'key-extra') {
+    if (store.keyExtras && store.keyExtras[targetKey]) {
+      var arr = store.keyExtras[targetKey];
+      var idx = arr.findIndex(function (p) { return p.src === item.src; });
+      if (idx !== -1) arr.splice(idx, 1);
+      if (!arr.length) delete store.keyExtras[targetKey];
+    }
+    if (publishedPhotos.keyExtras && publishedPhotos.keyExtras[targetKey]) {
+      var parr = publishedPhotos.keyExtras[targetKey];
+      var pidx = parr.findIndex(function (p) { return p.src === item.src; });
+      if (pidx !== -1) parr.splice(pidx, 1);
+    }
+  } else if (item.type === 'spot-extra') {
+    if (store.spotExtras && store.spotExtras[targetKey]) {
+      var sarr = store.spotExtras[targetKey];
+      var sidx = sarr.findIndex(function (p) { return p.src === item.src; });
+      if (sidx !== -1) sarr.splice(sidx, 1);
+      if (!sarr.length) delete store.spotExtras[targetKey];
+    }
+    if (publishedPhotos.spotExtras && publishedPhotos.spotExtras[targetKey]) {
+      var sparr = publishedPhotos.spotExtras[targetKey];
+      var spidx = sparr.findIndex(function (p) { return p.src === item.src; });
+      if (spidx !== -1) sparr.splice(spidx, 1);
+    }
+  } else if (item.type === 'key-single') {
+    if (store.keys) delete store.keys[targetKey];
+    if (publishedPhotos.keys) delete publishedPhotos.keys[targetKey];
+  } else if (item.type === 'base' || item.type === 'spot-base') {
+    store.hiddenPhotos = store.hiddenPhotos || {};
+    store.hiddenPhotos[item.key] = true;
+  }
+
+  setCustomStore(store);
+  renderCurrent();
+}
+
+/* 대상 항목의 현재 노출 사진 목록 수집 */
+function getPhotosForTarget(type, targetKey, defaultKeys) {
+  var store = getCustomStore();
+  var list = [];
+  if (type === 'spot') {
+    var s = SPOTS[targetKey];
+    if (s) {
+      var sKeys = (s.photos && s.photos.length) ? s.photos : (s.photo ? [s.photo] : []);
+      sKeys.forEach(function (k, idx) {
+        if (store.hiddenPhotos && store.hiddenPhotos[k]) return;
+        var p = photoOf(k);
+        if (p) list.push({ src: p.src, credit: p.credit || s.name, type: 'spot-base', key: k, idx: idx });
+      });
+      var extras = getSpotExtraPhotos(targetKey);
+      extras.forEach(function (p, idx) {
+        list.push({ src: p.src, credit: p.credit || (s.name + ' 추가 ' + (idx + 1)), type: 'spot-extra', key: targetKey, idx: idx });
+      });
+    }
+  } else {
+    var dKeys = Array.isArray(defaultKeys) ? defaultKeys : (defaultKeys ? [defaultKeys] : []);
+    dKeys.forEach(function (k, idx) {
+      if (store.hiddenPhotos && store.hiddenPhotos[k]) return;
+      var p = photoOf(k);
+      if (p) list.push({ src: p.src, credit: p.credit || '기본 사진', type: 'base', key: k, idx: idx });
+    });
+    if (store.keys && store.keys[targetKey]) {
+      var p = store.keys[targetKey];
+      if (!list.some(function (item) { return item.src === p.src; })) {
+        list.push({ src: p.src, credit: p.credit || '직접 등록한 사진', type: 'key-single', key: targetKey, idx: 0 });
+      }
+    } else if (publishedPhotos.keys && publishedPhotos.keys[targetKey]) {
+      var p2 = publishedPhotos.keys[targetKey];
+      if (!list.some(function (item) { return item.src === p2.src; })) {
+        list.push({ src: p2.src, credit: p2.credit || '등록된 사진', type: 'key-single', key: targetKey, idx: 0 });
+      }
+    } else if (PHOTO[targetKey] && !(store.hiddenPhotos && store.hiddenPhotos[targetKey])) {
+      var p3 = PHOTO[targetKey];
+      if (!list.some(function (item) { return item.src === p3.src; })) {
+        list.push({ src: p3.src, credit: p3.credit || '기본 사진', type: 'base', key: targetKey, idx: 0 });
+      }
+    }
+    var extras = getKeyExtraPhotos(targetKey);
+    extras.forEach(function (p, idx) {
+      if (!list.some(function (item) { return item.src === p.src; })) {
+        list.push({ src: p.src, credit: p.credit || ('추가 사진 ' + (idx + 1)), type: 'key-extra', key: targetKey, idx: idx });
+      }
+    });
+  }
+  return list.slice(-4);
+}
+
+/* 사진 관리 팝업 모달 제어 */
+var currentPm = null;
+
+function openPhotoManager(type, targetKey, title, defaultKeys) {
+  currentPm = {
+    type: type,
+    targetKey: targetKey,
+    title: title || '장소',
+    defaultKeys: defaultKeys || []
+  };
+  renderPhotoManager();
+  var modal = document.getElementById('photo-manage-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closePhotoManager() {
+  var modal = document.getElementById('photo-manage-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  currentPm = null;
+}
+
+function renderPhotoManager() {
+  if (!currentPm) return;
+  var titleEl = document.getElementById('pm-title');
+  var counterEl = document.getElementById('pm-counter');
+  var gridEl = document.getElementById('pm-grid');
+  if (!titleEl || !counterEl || !gridEl) return;
+
+  var photos = getPhotosForTarget(currentPm.type, currentPm.targetKey, currentPm.defaultKeys);
+  titleEl.textContent = '📸 ' + currentPm.title + ' 사진 관리';
+  counterEl.textContent = photos.length + ' / 4장';
+
+  var html = '';
+  photos.forEach(function (p, idx) {
+    html += '<div class="pm-slot" title="' + esc(p.credit) + '">' +
+      '<img src="' + esc(p.src) + '" alt="' + esc(p.credit) + '">' +
+      '<button type="button" class="pm-slot-del" data-pm-del="' + idx + '" title="이 사진 삭제">✕</button>' +
+      '<span class="pm-slot-badge">' + (idx + 1) + '번째</span>' +
+      '</div>';
+  });
+
+  if (photos.length < 4) {
+    html += '<button type="button" class="pm-slot pm-slot-add" id="btn-pm-add-slot" title="새 사진 추가하기">' +
+      '<span class="pm-slot-add-icon">＋</span>' +
+      '<span>사진 추가</span>' +
+      '<span style="font-size:10px;font-weight:normal;opacity:.8;">' + (photos.length + 1) + '번째 사진</span>' +
+      '</button>';
+  }
+
+  var remaining = 4 - photos.length - 1;
+  for (var i = 0; i < remaining; i++) {
+    html += '<div class="pm-slot pm-slot-empty">' +
+      '<span>빈 자리</span>' +
+      '</div>';
+  }
+
+  gridEl.innerHTML = html;
+}
+function migrateSketchUploads() {
+  var store = getCustomStore();
+  var changed = false;
+  Object.keys(SPOTS).forEach(function (spotId) {
+    var sketch = SPOTS[spotId].sketch;
+    if (!sketch) return;
+    var key = sketch.photo || (spotId + '_sketch');
+    var extras = (store.keyExtras || {})[key];
+    if (!extras || !extras.length) return;
+    store.keys = store.keys || {};
+    store.keys[key] = extras[extras.length - 1];
+    delete store.keyExtras[key];
+    changed = true;
+  });
+  if (changed) setCustomStore(store);
+}
+
+/* 이미지 클라이언트 압축 (가로/세로 비율 유지 및 고화질 경량화) */
+function compressImage(file, maxDimension, quality, callback, outputType) {
+  var maxLimit = maxDimension || 1080;
   var reader = new FileReader();
+  reader.onerror = function () {
+    alert('파일을 읽는 중 오류가 발생했습니다.');
+  };
   reader.onload = function (e) {
     var img = new Image();
+    img.onerror = function () {
+      alert('선택한 이미지 형식을 브라우저에서 읽을 수 없습니다.\nJPG 또는 PNG 형식의 사진을 선택해 주세요.');
+    };
     img.onload = function () {
       var w = img.width, h = img.height;
-      if (w > maxWidth) {
-        h = Math.round((h * maxWidth) / w);
-        w = maxWidth;
+      // 가로 사진, 세로 사진 모두 긴 변을 기준으로 비율을 유지하며 축소
+      if (w > maxLimit || h > maxLimit) {
+        if (w >= h) {
+          h = Math.round((h * maxLimit) / w);
+          w = maxLimit;
+        } else {
+          w = Math.round((w * maxLimit) / h);
+          h = maxLimit;
+        }
       }
       var canvas = document.createElement('canvas');
       canvas.width = w;
       canvas.height = h;
       var ctx = canvas.getContext('2d');
+      // 투명 배경이나 결함 방지를 위한 흰색 배경 채우기
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, w, h);
       ctx.drawImage(img, 0, 0, w, h);
-      var dataUrl = canvas.toDataURL('image/jpeg', quality || 0.85);
+      var dataUrl = canvas.toDataURL(outputType || 'image/jpeg', quality || 0.80);
       callback(dataUrl);
     };
     img.src = e.target.result;
@@ -509,13 +814,16 @@ function thumb(keyOrKeys, size, title, caption, editKey) {
   var keys = Array.isArray(keyOrKeys) ? keyOrKeys : (keyOrKeys ? [keyOrKeys] : []);
   var baseObjs = keys.map(function (k) { return photoOf(k); }).filter(Boolean);
   var extraObjs = editKey ? getKeyExtraPhotos(editKey) : [];
-  var photoObjs = baseObjs.concat(extraObjs).slice(0, 4);
+  var photoObjs = baseObjs.concat(extraObjs).slice(-4);
   var extra = size ? ' style="width:' + size[0] + 'px;height:' + size[1] + 'px"' : '';
   var editBtn = '';
   if (isEditMode() && editKey) {
     var cCount = photoObjs.length;
-    var btnTitle = cCount >= 4 ? '사진 4장 등록됨 (클릭하여 추가/교체)' : '사진 추가하기 (' + cCount + '/4장)';
-    editBtn = '<button type="button" class="thumb-edit-btn" data-upload-key="' + esc(editKey) + '" title="' + esc(btnTitle) + '">📷</button>';
+    var btnTitle = cCount >= 4 ? '사진 4장 등록됨 (클릭하여 관리/삭제/추가)' : '사진 관리/추가 (' + cCount + '/4장)';
+    editBtn = '<button type="button" class="thumb-edit-btn" data-upload-key="' + esc(editKey) + '"' +
+      (keys.length ? ' data-default-keys="' + esc(JSON.stringify(keys)) + '"' : '') +
+      ' data-item-title="' + esc(tit) + '"' +
+      ' title="' + esc(btnTitle) + '">📷</button>';
   }
   if (!photoObjs.length) {
     return '<div class="thumb"' + extra + '>' + IC.cam(size ? 20 : 20) + editBtn + '</div>';
@@ -846,9 +1154,9 @@ function spotCard(s, ref, i, total) {
           ? '<div class="sketch-box has-photo" data-lb-src="' + esc(sp.src) + '" data-lb-title="' + esc(s.name) + ' 안내 약도" data-lb-cap="' + esc(s.sketch.caption) + '" title="약도 터치하여 크게 보기">' +
               '<img src="' + esc(sp.src) + '" alt="약도" title="' + esc(sp.credit) + '" loading="lazy">' +
               '<span class="thumb-zoom-hint" style="width:24px;height:24px;font-size:12px;right:8px;bottom:8px;">🔍</span>' +
-              (isEditMode() ? '<button type="button" class="thumb-edit-btn" style="top:8px;right:8px;width:24px;height:24px;font-size:12px;" data-upload-key="' + esc(sketchKey) + '" title="약도 사진 변경">📷</button>' : '') +
+              (isEditMode() ? '<button type="button" class="thumb-edit-btn" style="top:8px;right:8px;width:24px;height:24px;font-size:12px;" data-upload-key="' + esc(sketchKey) + '" data-upload-replace="1" title="약도 사진 변경">📷</button>' : '') +
             '</div>'
-          : '<div class="sketch-box"' + (isEditMode() ? ' style="cursor:pointer;" data-upload-key="' + esc(sketchKey) + '" title="클릭하여 약도 사진 파일 등록"' : '') + '>' +
+          : '<div class="sketch-box"' + (isEditMode() ? ' style="cursor:pointer;" data-upload-key="' + esc(sketchKey) + '" data-upload-replace="1" title="클릭하여 약도 사진 파일 등록"' : '') + '>' +
               (isEditMode() ? '📷 약도 이미지 파일 등록 (클릭)' : '방문자 시점 약도 이미지') +
             '</div>') +
         '<div class="sketch-cap">' + esc(s.sketch.caption) + '</div></div>';
@@ -992,33 +1300,70 @@ document.addEventListener('click', function (e) {
     return;
   }
 
-  /* 사진 파일 열기 및 추가 (스팟 슬라이드에 추가) */
-  var btnSpotUpload = e.target.closest('[data-upload-spot]');
-  if (btnSpotUpload) {
+  /* 사진 관리 모달 닫기 */
+  if (e.target.closest('[data-pm-close]')) {
+    e.preventDefault();
+    closePhotoManager();
+    return;
+  }
+
+  /* 사진 관리 모달 내 개별 사진 삭제 (✕ 버튼) */
+  var delBtn = e.target.closest('[data-pm-del]');
+  if (delBtn && currentPm) {
     e.preventDefault(); e.stopPropagation();
-    var spotId = btnSpotUpload.dataset.uploadSpot;
-    var fi = document.getElementById('photo-upload-input');
-    if (fi) {
-      fi.dataset.uploadType = 'spot';
-      fi.dataset.uploadTarget = spotId;
-      fi.value = '';
-      fi.click();
+    var idx = parseInt(delBtn.dataset.pmDel, 10);
+    var photos = getPhotosForTarget(currentPm.type, currentPm.targetKey, currentPm.defaultKeys);
+    var targetPhoto = photos[idx];
+    if (targetPhoto && confirm('이 사진을 목록에서 삭제하시겠습니까?')) {
+      deleteCustomPhoto(currentPm.type, currentPm.targetKey, targetPhoto);
+      renderPhotoManager();
     }
     return;
   }
 
-  /* 사진 파일 열기 및 변경 (개별 썸네일/약도/주의 사진) */
+  /* 사진 관리 모달 내 [+ 사진 추가] 슬롯 클릭 */
+  var addSlotBtn = e.target.closest('#btn-pm-add-slot');
+  if (addSlotBtn && currentPm) {
+    e.preventDefault(); e.stopPropagation();
+    var fiSlot = document.getElementById('photo-upload-input');
+    if (fiSlot) {
+      fiSlot.dataset.uploadType = currentPm.type;
+      fiSlot.dataset.uploadTarget = currentPm.targetKey;
+      fiSlot.dataset.uploadMode = 'add';
+      fiSlot.value = '';
+      fiSlot.click();
+    }
+    return;
+  }
+
+  /* 사진 관리 팝업 열기 (스팟 슬라이드) */
+  var btnSpotUpload = e.target.closest('[data-upload-spot]');
+  if (btnSpotUpload) {
+    e.preventDefault(); e.stopPropagation();
+    var spotId = btnSpotUpload.dataset.uploadSpot;
+    var sObj = SPOTS[spotId] || {};
+    openPhotoManager('spot', spotId, (sObj.name || spotId) + ' 대표');
+    return;
+  }
+
+  /* 사진 관리 팝업 열기 (개별 썸네일/약도/주의 사진) */
   var btnKeyUpload = e.target.closest('[data-upload-key]');
   if (btnKeyUpload) {
     e.preventDefault(); e.stopPropagation();
     var keyId = btnKeyUpload.dataset.uploadKey;
-    var fi2 = document.getElementById('photo-upload-input');
-    if (fi2) {
-      fi2.dataset.uploadType = 'key';
-      fi2.dataset.uploadTarget = keyId;
-      fi2.value = '';
-      fi2.click();
+    var itemTitle = btnKeyUpload.dataset.itemTitle || '';
+    var defaultKeys = [];
+    try { defaultKeys = JSON.parse(btnKeyUpload.dataset.defaultKeys || '[]'); } catch (err) {}
+    if (!itemTitle) {
+      var cardEl = btnKeyUpload.closest('.row, .notice, .sketch-box, .stay, .thumb');
+      if (cardEl) {
+        var nameEl = cardEl.querySelector('.fac-name, .park-info b, .notice-txt b, .sub');
+        if (nameEl) itemTitle = nameEl.textContent.trim();
+      }
     }
+    if (!itemTitle) itemTitle = btnKeyUpload.getAttribute('title') || '항목';
+    itemTitle = itemTitle.replace(/사진 관리\/추가.*|사진.*등록됨.*/, '').trim();
+    openPhotoManager('key', keyId, itemTitle, defaultKeys);
     return;
   }
 
@@ -1098,15 +1443,24 @@ if (photoUploadInput) {
     if (!files.length) return;
     var type = photoUploadInput.dataset.uploadType;
     var target = photoUploadInput.dataset.uploadTarget;
+    var uploadMode = photoUploadInput.dataset.uploadMode;
 
     function processNext(idx) {
       if (idx >= files.length) {
         renderCurrent();
+        if (currentPm) {
+          renderPhotoManager();
+        }
         return;
       }
-      compressImage(files[idx], 1280, 0.85, function (dataUrl) {
+      compressImage(files[idx], uploadMode === 'replace' ? 1440 : 1080, 0.80, function (dataUrl) {
+        var saved = true;
         if (type === 'spot') {
-          addSpotExtraPhoto(target, dataUrl, '직접 등록한 사진');
+          saved = addSpotExtraPhoto(target, dataUrl, '직접 등록한 사진');
+          if (!saved) {
+            alert('사진 저장 용량(브라우저 한도)이 부족합니다.\n화면 하단의 [🚀 원클릭 깃허브 반영 및 저장]을 눌러 저장소에 반영하거나 다른 사진을 삭제해 주세요.');
+            return;
+          }
           var course = currentCourse();
           if (course) {
             var spIdx = course.spots.findIndex(function (r) { return r.id === target; });
@@ -1119,14 +1473,58 @@ if (photoUploadInput) {
             }
           }
         } else if (type === 'key') {
-          addKeyExtraPhoto(target, dataUrl, '직접 등록한 사진');
+          if (uploadMode === 'replace') saved = saveKeyPhoto(target, dataUrl, '직접 등록한 약도');
+          else saved = addKeyExtraPhoto(target, dataUrl, '직접 등록한 사진');
+          if (!saved) {
+            alert('사진 저장 용량(브라우저 한도)이 부족합니다.\n화면 하단의 [🚀 원클릭 깃허브 반영 및 저장]을 눌러 저장소에 반영하거나 다른 사진을 삭제해 주세요.');
+            return;
+          }
         }
         processNext(idx + 1);
-      });
+      }, uploadMode === 'replace' && files[idx].type === 'image/png' ? 'image/png' : 'image/jpeg');
     }
     processNext(0);
   });
 }
+
+var adminPushButton = document.getElementById('btn-admin-push');
+if (adminPushButton) adminPushButton.addEventListener('click', async function () {
+  if (adminPushButton.disabled) return;
+  isPublishing = true;
+  adminPushButton.disabled = true;
+  adminPushButton.textContent = '⏳ 사진 저장 및 GitHub 반영 중…';
+  updateAdminBar('사진을 저장하고 GitHub에 반영하고 있습니다…');
+  var finalMessage = '';
+  try {
+    var response = await fetch('/api/save-and-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(getCustomStore())
+    });
+    var result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.error || '반영에 실패했습니다.');
+    var manifestResponse = await fetch('data/published-photos.json', { cache: 'no-store' });
+    if (!manifestResponse.ok) throw new Error('저장한 사진 목록을 다시 읽지 못했습니다. 화면을 새로고침해 주세요.');
+    publishedPhotos = await manifestResponse.json();
+    setCustomStore({});
+    renderCurrent();
+    finalMessage = result.message;
+  } catch (error) {
+    finalMessage = error.message;
+  } finally {
+    isPublishing = false;
+    adminPushButton.textContent = '🚀 원클릭 깃허브 반영 및 저장';
+    updateAdminBar(finalMessage);
+    setTimeout(updateAdminBar, 10000);
+  }
+});
+var adminResetButton = document.getElementById('btn-admin-reset-all');
+if (adminResetButton) adminResetButton.addEventListener('click', function () {
+  if (confirm('반영 대기 중인 사진을 모두 초기화할까요? GitHub에 이미 반영된 사진은 유지됩니다.')) {
+    resetCustomPhotos();
+    renderCurrent();
+  }
+});
 
 /* ─────────────────────────────────────────────────────────
    라이트박스 모달 뷰어 제어 (A안)
@@ -1188,6 +1586,13 @@ function nextLightbox() {
 }
 
 window.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    var pm = document.getElementById('photo-manage-modal');
+    if (pm && !pm.classList.contains('hidden')) {
+      closePhotoManager();
+      return;
+    }
+  }
   var modal = document.getElementById('lightbox-modal');
   if (modal && !modal.classList.contains('hidden')) {
     if (e.key === 'Escape') closeLightbox();
@@ -1252,7 +1657,13 @@ function route() {
 }
 window.addEventListener('hashchange', route);
 document.getElementById('data-date').textContent = DATA_DATE;
+migrateSketchUploads();
 route();
+updateAdminBar();
+fetch('data/published-photos.json', { cache: 'no-store' })
+  .then(function (response) { if (!response.ok) throw new Error('사진 목록을 읽지 못했습니다.'); return response.json(); })
+  .then(function (data) { publishedPhotos = data; renderCurrent(); updateAdminBar(); })
+  .catch(function (error) { console.warn(error.message); });
 
 /* ─────────────────────────────────────────────────────────
    네이버지도 · 키가 있을 때만 로드
