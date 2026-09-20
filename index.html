@@ -333,24 +333,29 @@ body.admin-visible{padding-bottom:92px}
   }
 }
 
-/* ── PC/태블릿 와이드 뷰 (icheon-one 스타일 시원한 960px 레이아웃) ── */
+/* ── PC/태블릿 와이드 뷰 (icheon-one 스타일 시원한 960px 레이아웃 & 1.2배 황금 스케일업) ── */
 @media (min-width: 768px) {
   .page {
     max-width: 960px;
-    padding: 24px 28px 48px;
+    padding: 26px 30px 52px;
     gap: 32px;
   }
+  .sub {
+    font-size: 13.5px;
+  }
+
+  /* 메인 히어로 배너 */
   .hero {
     min-height: 380px;
-    border-radius: 22px;
+    border-radius: 24px;
   }
   .hero-txt {
-    padding: 36px 36px 64px;
+    padding: 38px 38px 66px;
     gap: 10px;
   }
   .hero-badge {
-    height: 28px;
-    font-size: 13px;
+    height: 30px;
+    font-size: 13.5px;
     padding: 0 14px;
   }
   .hero-txt h1 {
@@ -360,116 +365,275 @@ body.admin-visible{padding-bottom:92px}
     font-size: 20px;
     line-height: 1.5;
   }
+
+  /* 상단 코스 요약 */
+  .overview {
+    gap: 8px;
+  }
+  .ov-row {
+    min-height: 52px;
+    gap: 14px;
+  }
+  .ov-name {
+    font-size: 17px;
+  }
+  .ov-region {
+    font-size: 13.5px;
+  }
+  .ov-row .track {
+    width: 96px;
+    height: 30px;
+    font-size: 13px;
+  }
+
+  /* 카테고리 필터 칩 */
+  .chips-wrap {
+    gap: 12px;
+  }
+  .chips {
+    gap: 10px;
+  }
+  .chip {
+    height: 50px;
+    padding: 0 20px;
+    font-size: 15.5px;
+  }
+  .track {
+    height: 28px;
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  /* 코스 카드 목록 */
   .cards {
-    gap: 16px;
+    gap: 18px;
   }
   .ccard {
-    padding: 22px 26px;
-    border-radius: 16px;
+    padding: 24px 28px;
+    border-radius: 18px;
+    gap: 16px;
     transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
   .ccard:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,.06);
+    box-shadow: 0 8px 24px rgba(0,0,0,.07);
   }
   .ccard-name {
-    font-size: 22px;
+    font-size: 23px;
   }
   .ccard-line {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
   }
   .tag-rain {
-    height: 24px;
-    font-size: 12px;
+    height: 26px;
+    font-size: 12.5px;
     padding: 0 10px;
   }
-  .track {
-    height: 26px;
-    font-size: 13px;
-    padding: 0 12px;
-  }
+
+  /* 지도 */
   #naver-map, .map-ph {
     height: 380px;
     border-radius: 18px;
+    font-size: 14.5px;
   }
+
+  /* 바깥 링크 타일 */
   .tiles {
     gap: 14px;
   }
   .tile {
-    min-height: 68px;
-    padding: 14px 20px;
+    min-height: 72px;
+    padding: 14px 22px;
     border-radius: 14px;
   }
   .tile b {
-    font-size: 16px;
+    font-size: 16.5px;
   }
   .tile span {
-    font-size: 13px;
+    font-size: 13.5px;
   }
-  /* 상세 페이지 */
+
+  /* 코스 상세 헤더 & 점프 탭 */
+  .back {
+    height: 48px;
+    font-size: 15.5px;
+    gap: 6px;
+  }
   .chead {
     gap: 10px;
   }
+  .chead-region {
+    font-size: 13.5px;
+  }
   .chead h2 {
-    font-size: 26px;
+    font-size: 28px;
   }
   .chead p {
-    font-size: 16px;
+    font-size: 16.5px;
+    line-height: 1.6;
   }
+  .jumps {
+    gap: 8px;
+  }
+  .jump {
+    height: 46px;
+    font-size: 15px;
+    padding: 0 14px;
+  }
+
+  /* 스팟 카드 (접힌 카드 포함 도톰한 볼륨감) */
   .spot-block {
     gap: 28px;
   }
   .spot {
-    border-radius: 16px;
+    border-radius: 18px;
   }
   .spot-photo {
     height: 340px;
   }
   .spot-body {
-    padding: 20px 24px;
-    gap: 12px;
+    padding: 22px 28px;
+    gap: 14px;
+  }
+  .spot-head {
+    min-height: 58px;
+    padding: 4px 0;
   }
   .spot-name {
-    font-size: 22px;
+    font-size: 23px;
   }
   .badge-rec {
+    height: 28px;
+    font-size: 13.5px;
+    padding: 0 12px;
+    border-radius: 7px;
+  }
+  .toggle {
+    font-size: 14px;
+    gap: 4px;
+  }
+  .band {
+    padding: 14px 18px;
+    font-size: 15.5px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+
+  /* 스팟 세부 정보 */
+  .spot-more {
+    padding: 18px 28px 14px;
+  }
+  .sect+.sect {
+    margin-top: 8px;
+  }
+  .sect+.sect>.sub {
+    padding: 14px 0 4px;
+  }
+  .row-in {
+    min-height: 64px;
+    padding: 14px 0;
+    gap: 16px;
+  }
+  .fac-name {
+    font-size: 17px;
+  }
+  .fac-hours {
+    font-size: 14.5px;
+  }
+  .park-info {
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .btn {
+    height: 46px;
+    width: 116px;
+    font-size: 14.5px;
+    border-radius: 10px;
+  }
+  .btn-ghost {
+    height: 46px;
+    width: 94px;
+    font-size: 14.5px;
+    border-radius: 10px;
+  }
+  .row-btns {
+    gap: 8px;
+  }
+
+  /* 꿀팁 및 주의 박스 */
+  .tip {
+    padding: 12px 0;
+    font-size: 14.5px;
+    gap: 10px;
+  }
+  .tip-tag {
     height: 26px;
     font-size: 13px;
     padding: 0 10px;
   }
-  .spot-more {
-    padding: 16px 24px 12px;
+  .notice {
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 14.5px;
   }
-  .fac-name {
-    font-size: 16px;
+  .notice-txt {
+    font-size: 14.5px;
   }
-  .fac-hours {
+  .pill-warn {
+    height: 24px;
+    font-size: 12px;
+    padding: 0 9px;
+  }
+  .btn-sm {
+    height: 40px;
     font-size: 14px;
-  }
-  .park-info {
-    font-size: 14px;
-  }
-  .btn {
-    height: 42px;
-    font-size: 14px;
+    padding: 0 14px;
     border-radius: 9px;
   }
-  .btn-ghost {
-    height: 42px;
-    font-size: 14px;
-    border-radius: 9px;
-  }
+
+  /* 식당 부록 */
   .food {
-    padding: 20px 24px;
-    border-radius: 16px;
+    padding: 24px 28px;
+    border-radius: 18px;
+    gap: 14px;
+  }
+  .food-note {
+    font-size: 14.5px;
+  }
+  .pill-food {
+    height: 26px;
+    font-size: 13.5px;
+    padding: 0 12px;
+  }
+  .food-row {
+    padding: 12px 0;
+    min-height: 62px;
+    gap: 14px;
   }
   .food-row-in b {
-    font-size: 16px;
+    font-size: 17px;
   }
   .food-row-in span {
-    font-size: 14px;
+    font-size: 14.5px;
   }
+  .btn-lg {
+    height: 52px;
+    font-size: 16.5px;
+    border-radius: 12px;
+  }
+
+  /* 하단 푸터 */
+  .footer {
+    padding-top: 28px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .footer .f1 {
+    font-size: 17px;
+  }
+
+  /* 관리자 및 모달 */
   .admin-bar {
     max-width: 860px;
   }
