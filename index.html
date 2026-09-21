@@ -1109,6 +1109,8 @@ function getSpotExtraPhotos(spotId) {
 function getKeyExtraPhotos(key) {
   if (!key) return [];
   var store = getCustomStore();
+  if (store.hiddenPhotos && store.hiddenPhotos[key]) return [];
+  if (publishedPhotos.hiddenPhotos && publishedPhotos.hiddenPhotos[key]) return [];
   var pub = (publishedPhotos.keyExtras || {})[key] || [];
   var loc = (store.keyExtras || {})[key] || [];
   var merged = pub.concat(loc);
@@ -1277,13 +1279,16 @@ function replaceCustomPhoto(type, targetKey, slotIdx, newSrc, newCredit) {
 /* 대상 항목의 현재 노출 사진 목록 수집 */
 function getPhotosForTarget(type, targetKey, defaultKeys) {
   var store = getCustomStore();
+  var isHidden = function (k) {
+    return !!((store.hiddenPhotos && store.hiddenPhotos[k]) || (publishedPhotos.hiddenPhotos && publishedPhotos.hiddenPhotos[k]));
+  };
   var list = [];
   if (type === 'spot') {
     var s = SPOTS[targetKey];
     if (s) {
       var sKeys = (s.photos && s.photos.length) ? s.photos : (s.photo ? [s.photo] : []);
       sKeys.forEach(function (k, idx) {
-        if (store.hiddenPhotos && store.hiddenPhotos[k]) return;
+        if (isHidden(k)) return;
         var p = photoOf(k);
         if (p) list.push({ src: p.src, credit: p.credit || s.name, type: 'spot-base', key: k, idx: idx });
       });
@@ -1295,7 +1300,7 @@ function getPhotosForTarget(type, targetKey, defaultKeys) {
   } else {
     var dKeys = Array.isArray(defaultKeys) ? defaultKeys : (defaultKeys ? [defaultKeys] : []);
     dKeys.forEach(function (k, idx) {
-      if (store.hiddenPhotos && store.hiddenPhotos[k]) return;
+      if (isHidden(k)) return;
       var p = photoOf(k);
       if (p) list.push({ src: p.src, credit: p.credit || '기본 사진', type: 'base', key: k, idx: idx });
     });
@@ -1309,7 +1314,7 @@ function getPhotosForTarget(type, targetKey, defaultKeys) {
       if (!list.some(function (item) { return item.src === p2.src; })) {
         list.push({ src: p2.src, credit: p2.credit || '등록된 사진', type: 'key-single', key: targetKey, idx: 0 });
       }
-    } else if (PHOTO[targetKey] && !(store.hiddenPhotos && store.hiddenPhotos[targetKey])) {
+    } else if (PHOTO[targetKey] && !isHidden(targetKey)) {
       var p3 = PHOTO[targetKey];
       if (!list.some(function (item) { return item.src === p3.src; })) {
         list.push({ src: p3.src, credit: p3.credit || '기본 사진', type: 'base', key: targetKey, idx: 0 });
