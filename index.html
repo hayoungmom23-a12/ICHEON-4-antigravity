@@ -977,11 +977,7 @@ var PHOTO = {
   farmpark_forest_sun:   { src: 'images/thumbs/farmpark_forest_sun.jpg', credit: '유아숲놀이터 숲길' },
 
   // 설봉공원 추가 실사
-  seolbong_lake_walk:    { src: 'images/thumbs/seolbong_lake_walk.jpg', credit: '설봉호수 둘레길 산책로' },
-
-  // 추천 식당 실사
-  food_pujuk:            { src: 'images/thumbs/food_pujuk.jpg', credit: '푸주옥 설렁탕' },
-  food_donkatsu:         { src: 'images/thumbs/food_donkatsu.jpg', credit: '최고당돈가스 세트' }
+  seolbong_lake_walk:    { src: 'images/thumbs/seolbong_lake_walk.jpg', credit: '설봉호수 둘레길 산책로' }
 };
 var HERO_PHOTO = 'images/spots/seolbong.jpg';
 
@@ -1583,14 +1579,7 @@ function renderDetail(course) {
   if (food.list && food.list.length) {
     h += '<div class="food-label" title="직접 답사한 뒤 고른 식당입니다"><span class="star">' + IC.foodStar() + '</span><span class="pill-food">추천 식당</span></div>' +
       '<div class="food-list">' + food.list.map(function (r) {
-        var thumbHtml = '';
-        if (r.photo) {
-          var p = photoOf(r.photo);
-          if (p) {
-            thumbHtml = '<img class="food-thumb" src="' + esc(p.src) + '" alt="' + esc(r.name) + '" loading="lazy" onclick="openLightbox(\'' + esc(p.src) + '\',\'' + esc(r.name) + (p.credit ? ' · ' + esc(p.credit) : '') + '\')">';
-          }
-        }
-        return '<div class="food-row">' + thumbHtml + '<div class="food-row-in"><b>' + esc(r.name) + '</b>' +
+        return '<div class="food-row"><div class="food-row-in"><b>' + esc(r.name) + '</b>' +
           (r.tip ? '<span>' + esc(r.tip) + '</span>' : '') + '</div>' +
           '<a class="btn" href="' + esc(nplace(r)) + '" target="_blank" rel="noopener">네이버플레이스</a></div>';
       }).join('') + '</div>';
