@@ -960,6 +960,10 @@ var PHOTO = {
   woodcarving:           { src: 'images/thumbs/woodcarving.jpg', credit: '목공예 작품 소품' },
 
   // 덕평공룡수목원
+  dino_terrace:          { src: 'images/spots/dino_terrace.png', credit: '야외 파라솔 테라스' },
+  dino_pond:             { src: 'images/spots/dino_pond.jpg', credit: '연못 브라키오사우루스 공룡 모형' },
+  dino_bread:            { src: 'images/spots/dino_bread.png', credit: '덕평공룡수목원 공룡빵' },
+  dino_cafe:             { src: 'images/spots/dino_cafe.jpg', credit: '수목원 공룡카페 쉼터' },
   dino_parking:          { src: 'images/thumbs/dino_parking.jpg', credit: '덕평공룡수목원 전용 주차장' },
   dino_model:            { src: 'images/thumbs/dino_model.jpg', credit: '덕평공룡수목원 공룡 테마 전시' },
 
@@ -1211,6 +1215,8 @@ function replaceCustomPhoto(type, targetKey, slotIdx, newSrc, newCredit) {
     if (fIdx !== -1) {
       arr[fIdx] = { src: newSrc, credit: creditText };
     } else {
+      store.deletedPhotos = store.deletedPhotos || {};
+      store.deletedPhotos[item.src] = true;
       arr.push({ src: newSrc, credit: creditText });
     }
     store.keyExtras[targetKey] = arr;
@@ -1221,6 +1227,8 @@ function replaceCustomPhoto(type, targetKey, slotIdx, newSrc, newCredit) {
     if (sfIdx !== -1) {
       sarr[sfIdx] = { src: newSrc, credit: creditText };
     } else {
+      store.deletedPhotos = store.deletedPhotos || {};
+      store.deletedPhotos[item.src] = true;
       sarr.push({ src: newSrc, credit: creditText });
     }
     store.spotExtras[targetKey] = sarr;
@@ -1376,6 +1384,13 @@ function migrateSketchUploads() {
     changed = true;
   });
   if (changed) setCustomStore(store);
+}
+function migrateDinoPhotos() {
+  var store = getCustomStore();
+  if (store.spotExtras && store.spotExtras.dino) {
+    delete store.spotExtras.dino;
+    setCustomStore(store);
+  }
 }
 
 /* 이미지 클라이언트 압축 (가로/세로 비율 유지 및 고화질 경량화) */
@@ -1656,9 +1671,9 @@ function spotCard(s, ref, i, total) {
   }
 
   h += '<div class="spot-body">' +
-    '<div class="spot-head" data-toggle="' + i + '"><div class="ccard-mid"><span class="spot-name">' + esc(s.name) + '</span>' +
+    '<div class="spot-head" data-toggle="' + i + '" role="button" tabindex="0"><div class="ccard-mid"><span class="spot-name">' + esc(s.name) + '</span>' +
     (s.recommended ? '<span class="badge-rec">' + IC.star() + '추천</span>' : '') + '</div>' +
-    '<div class="toggle' + (open ? ' open' : '') + '">' +
+    '<div class="toggle' + (open ? ' open' : '') + '" data-toggle="' + i + '" role="button" aria-expanded="' + (open ? 'true' : 'false') + '">' +
     (open
       ? '<span class="toggle-icon">⌃</span><span>닫기</span>'
       : '<span class="toggle-icon">📖</span><span>코스 펼쳐보기</span><span class="chev">' + IC.chevD() + '</span>') +
@@ -1913,7 +1928,14 @@ document.addEventListener('click', function (e) {
   }
 
   var tg = e.target.closest('[data-toggle]');
-  if (tg) { var n = tg.dataset.toggle; state.expanded[n] = !state.expanded[n]; renderCurrent(); return; }
+  if (tg) {
+    e.preventDefault();
+    e.stopPropagation();
+    var n = tg.dataset.toggle;
+    state.expanded[n] = !state.expanded[n];
+    renderCurrent();
+    return;
+  }
 
   var pmapBtn = e.target.closest('[data-toggle-pmap]');
   if (pmapBtn) {
@@ -1943,9 +1965,8 @@ document.addEventListener('click', function (e) {
     var course = currentCourse();
     if (course && course.spots[spIdx]) {
       var refId = course.spots[spIdx].id;
-      var sObj = SPOTS[refId];
-      var pList = (sObj.photos && sObj.photos.length) ? sObj.photos : (sObj.photo ? [sObj.photo] : []);
-      var totalLen = pList.length + getSpotExtraPhotos(refId).length;
+      var curObjs = getPhotosForTarget('spot', refId);
+      var totalLen = curObjs.length || 1;
       state.slide = state.slide || {};
       var cur = state.slide[spIdx] || 0;
       state.slide[spIdx] = (cur - 1 + totalLen) % totalLen;
@@ -1962,9 +1983,8 @@ document.addEventListener('click', function (e) {
     var course = currentCourse();
     if (course && course.spots[spIdx]) {
       var refId = course.spots[spIdx].id;
-      var sObj = SPOTS[refId];
-      var pList = (sObj.photos && sObj.photos.length) ? sObj.photos : (sObj.photo ? [sObj.photo] : []);
-      var totalLen = pList.length + getSpotExtraPhotos(refId).length;
+      var curObjs = getPhotosForTarget('spot', refId);
+      var totalLen = curObjs.length || 1;
       state.slide = state.slide || {};
       var cur = state.slide[spIdx] || 0;
       state.slide[spIdx] = (cur + 1) % totalLen;
@@ -2460,6 +2480,7 @@ function route() {
 window.addEventListener('hashchange', route);
 document.getElementById('data-date').textContent = DATA_DATE;
 migrateSketchUploads();
+migrateDinoPhotos();
 route();
 updateAdminBar();
 fetch('data/published-photos.json', { cache: 'no-store' })

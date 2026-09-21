@@ -192,11 +192,11 @@
     "id": "dino",
     "name": "덕평공룡수목원",
     "photo": {
-      "file": "dino.jpg",
-      "alt": "덕평공룡수목원 야외 공룡 전시",
-      "credit": "덕평공룡수목원 공식 (dinovill.com)",
-      "license": "공식 제공",
-      "takenOn": "2026-09-04"
+      "file": "dino_terrace.png",
+      "alt": "덕평공룡수목원 야외 테라스 파라솔 테이블",
+      "credit": "덕평공룡수목원 야외 테라스",
+      "license": "사용자 등록",
+      "takenOn": "2026-09-21"
     },
     "parkings": [
       {

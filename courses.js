@@ -53,11 +53,11 @@ window.ICHEON_DATA = {
         '아이: 나이별로 초·중·고급반으로 나뉘고 체험비(재료비)가 든다 · 당일 예약 가능',
         '운영: 만들기 체험 프로그램은 회차별 예약 여부를 공식 사이트에서 먼저 확인해야 한다'
       ] },
-    dino: { name: '덕평공룡수목원', photo: 'dino', photos: ['dino', 'dino_model', 'dino_parking'],
-      parkings: [{ name: '수목원 주차장', walkTo: '공룡 전시·동물·자연', entry: '수목원 정문 매표소 앞 넓은 전용 주차장', q: '덕평공룡수목원', mapBased: false, photo: 'dino_parking', photos: ['dino_parking', 'dino'] }],
+    dino: { name: '덕평공룡수목원', photo: 'dino_terrace', photos: ['dino_terrace', 'dino_pond', 'dino_bread', 'dino_cafe'],
+      parkings: [{ name: '수목원 주차장', walkTo: '공룡 전시·동물·자연', entry: '수목원 정문 매표소 앞 넓은 전용 주차장', q: '덕평공룡수목원', mapBased: false, photo: 'dino_parking', photos: ['dino_parking', 'dino_terrace'] }],
       facilities: [
-        { name: '덕평공룡수목원', hours: '09:00~18:00 (입장마감 17:00) · 연중무휴 · 031-633-5029', official: 'https://dinovill.com/', booking: 'https://map.naver.com/p/entry/place/36505156?lng=127.3379533&lat=37.2314807&placePath=%2Fticket%3Ffrom%3Dmap%26fromPanelNum%3D1%26additionalHeight%3D76%26timestamp%3D202609210445%26locale%3Dko%26svcName%3Dmap_pcv5&entry=plt&searchType=place&c=15.00,0,0,0,dh', photo: 'dino_model', photos: ['dino_model', 'dino'] },
-        { name: '공룡카페', hours: '수목원 온실 속 커피와 디저트 쉼터 · 09:00~18:00', photo: 'dino', photos: ['dino', 'dino_model'] }
+        { name: '덕평공룡수목원', hours: '09:00~18:00 (입장마감 17:00) · 연중무휴 · 031-633-5029', official: 'https://dinovill.com/', booking: 'https://map.naver.com/p/entry/place/36505156?lng=127.3379533&lat=37.2314807&placePath=%2Fticket%3Ffrom%3Dmap%26fromPanelNum%3D1%26additionalHeight%3D76%26timestamp%3D202609210445%26locale%3Dko%26svcName%3Dmap_pcv5&entry=plt&searchType=place&c=15.00,0,0,0,dh', photo: 'dino_pond', photos: ['dino_pond', 'dino_terrace'] },
+        { name: '공룡카페', hours: '수목원 온실 속 커피와 디저트 쉼터 · 09:00~18:00', photo: 'dino_cafe', photos: ['dino_cafe', 'dino_bread'] }
       ],
       tips: [
         '주차: 매표소 정문 바로 앞 넓은 전용 평지 주차장을 무료로 이용할 수 있다',
