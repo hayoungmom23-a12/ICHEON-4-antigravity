@@ -43,10 +43,6 @@
     "woljeon_art": {
       "src": "images/thumbs/custom_key_woljeon_art.jpg",
       "credit": "직접 교체한 사진"
-    },
-    "farmpark_parking_temp": {
-      "src": "images/thumbs/custom_key_farmpark_parking_temp.jpg",
-      "credit": "직접 교체한 사진"
     }
   },
   "keyExtras": {

@@ -1392,6 +1392,24 @@ function migrateDinoPhotos() {
     setCustomStore(store);
   }
 }
+function migrateFarmparkParkingPhotos() {
+  var store = getCustomStore();
+  var changed = false;
+  if (store.keys && store.keys.farmpark_parking_temp && store.keys.farmpark_parking_temp.src && store.keys.farmpark_parking_temp.src.indexOf('custom_key_farmpark_parking_temp') !== -1) {
+    delete store.keys.farmpark_parking_temp;
+    changed = true;
+  }
+  if (store.hiddenPhotos && store.hiddenPhotos.farmpark_parking_temp) {
+    delete store.hiddenPhotos.farmpark_parking_temp;
+    changed = true;
+  }
+  if (store.hiddenPhotos && store.hiddenPhotos.farmpark_parking_eco) {
+    delete store.hiddenPhotos.farmpark_parking_eco;
+    changed = true;
+  }
+  if (changed) setCustomStore(store);
+}
+
 
 /* 이미지 클라이언트 압축 (가로/세로 비율 유지 및 고화질 경량화) */
 function compressImage(file, maxDimension, quality, callback, outputType) {
@@ -1438,9 +1456,8 @@ function nmap(q) { return 'https://map.naver.com/p/search/' + encodeURIComponent
 function nplace(r) { return r.placeId ? 'https://m.place.naver.com/restaurant/' + r.placeId + '/home' : nmap(r.q); }
 function thumb(keyOrKeys, size, title, caption, editKey) {
   var keys = Array.isArray(keyOrKeys) ? keyOrKeys : (keyOrKeys ? [keyOrKeys] : []);
-  var baseObjs = keys.map(function (k) { return photoOf(k); }).filter(Boolean);
-  var extraObjs = editKey ? getKeyExtraPhotos(editKey) : [];
-  var photoObjs = baseObjs.concat(extraObjs).slice(-4);
+  var tit = title || caption || '사진 확대';
+  var photoObjs = editKey ? getPhotosForTarget('key', editKey, keys) : keys.map(function (k) { return photoOf(k); }).filter(Boolean);
   var extra = size ? ' style="width:' + size[0] + 'px;height:' + size[1] + 'px"' : '';
   var editBtn = '';
   if (isEditMode() && editKey) {
@@ -1455,7 +1472,6 @@ function thumb(keyOrKeys, size, title, caption, editKey) {
     return '<div class="thumb"' + extra + '>' + IC.cam(size ? 20 : 20) + editBtn + '</div>';
   }
   var p = photoObjs[0];
-  var tit = title || p.credit || '사진 확대';
   var cap = caption || p.credit || '';
   var badge = photoObjs.length > 1
     ? '<span class="thumb-count-badge">📷 ' + photoObjs.length + '</span>'
@@ -2502,6 +2518,7 @@ window.addEventListener('hashchange', route);
 document.getElementById('data-date').textContent = DATA_DATE;
 migrateSketchUploads();
 migrateDinoPhotos();
+migrateFarmparkParkingPhotos();
 route();
 updateAdminBar();
 fetch('data/published-photos.json', { cache: 'no-store' })

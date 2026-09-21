@@ -28,8 +28,8 @@ window.ICHEON_DATA = {
       sketch: { caption: '공원 종합안내지도 (이천시설관리공단 제공). 1600px 고화질로 전체 시설 동선을 한눈에 확인하세요.', photo: 'farmmap' },
       stay: { text: '공원 안 어농골펜션(숲체험촌·쌀체험촌)과 국민여가캠핑장(캐빈하우스·야영장)에서 숙박할 수 있습니다.', url: 'https://farmpark.2000fmc.or.kr/park/campsite/Z74973656', photo: 'farmpark_camp', photos: ['farmpark_camp', 'farmpark'] },
       parkings: [
-        { name: '관광안내센터 옆 임시주차장', walkTo: '라이스카페·쌀문화전시관', entry: '임시주차장 계단을 오르면 쌀문화전시관 · 건너편 라이스카페', q: '이천농업테마공원 종합안내센터', mapBased: true, photo: 'farmpark_parking_temp', photos: ['farmpark_parking_temp', 'farmpark_parking_eco'] },
-        { name: '생태2주차장', walkTo: '라이스카페·쌀문화전시관', entry: '라이스카페 뒤편이 주차장 · 건너편이 임시주차장', q: '이천농업테마공원 주차장', mapBased: true, photo: 'farmpark_parking_eco', photos: ['farmpark_parking_eco', 'farmpark_parking_temp'] }
+        { name: '관광안내센터 옆 임시주차장', walkTo: '라이스카페·쌀문화전시관', entry: '임시주차장 계단을 오르면 쌀문화전시관 · 건너편 라이스카페', q: '이천농업테마공원 종합안내센터', mapBased: true, photo: 'farmpark_parking_temp', photos: ['farmpark_parking_temp'] },
+        { name: '생태2주차장', walkTo: '라이스카페·쌀문화전시관', entry: '라이스카페 뒤편이 주차장 · 건너편이 임시주차장', q: '이천농업테마공원 주차장', mapBased: true, photo: 'farmpark_parking_eco', photos: ['farmpark_parking_eco'] }
       ],
       parkingNotice: { name: '후문 주차장', text: '숙박 체크인 고객만 주차 가능 (2026년 3월부터)', q: '이천농업테마공원 후문', note: '쌀문화전시관 앞 주차장으로 추정 · 지도 스팟 표시 확인할 것', photo: 'farmpark_parking_back', photos: ['farmpark_parking_back', 'farmpark_camp'] },
       facilities: [
