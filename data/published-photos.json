@@ -43,6 +43,10 @@
     "woljeon_art": {
       "src": "images/thumbs/custom_key_woljeon_art.jpg",
       "credit": "직접 교체한 사진"
+    },
+    "farmpark_water": {
+      "src": "images/thumbs/custom_key_farmpark_water.jpg",
+      "credit": "직접 교체한 사진"
     }
   },
   "keyExtras": {
@@ -117,6 +121,28 @@
     "farmpark_parking_eco": [
       {
         "src": "images/thumbs/custom_key_farmpark_parking_eco_extra_f7f453ff-0e24-4657-b30d-5ad39d701796.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "farmpark": [
+      {
+        "src": "images/thumbs/custom_key_farmpark_extra_5111378b-0b9b-4fd0-a4f1-387f73160a6c.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "farmpark_forest": [
+      {
+        "src": "images/thumbs/custom_key_farmpark_forest_extra_00856a86-ac83-4caf-a1f7-2fcfbabffeb9.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "rice_fest": [
+      {
+        "src": "images/thumbs/custom_key_rice_fest_extra_56cacc21-7663-49c8-82b2-933af3d21eee.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_rice_fest_extra_e155bf82-e612-489f-a21f-6912e5e3cd69.jpg",
         "credit": "직접 등록한 사진"
       }
     ]
