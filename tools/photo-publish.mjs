@@ -23,12 +23,21 @@ export function savePhotos(root, data) {
   const thumbs = path.join(root, 'images', 'thumbs');
   const manifest = fs.existsSync(manifestPath)
     ? JSON.parse(fs.readFileSync(manifestPath, 'utf8'))
-    : { keys: {}, keyExtras: {}, spotExtras: {} };
+    : { keys: {}, keyExtras: {}, spotExtras: {}, hiddenPhotos: {} };
+  manifest.keys = manifest.keys || {};
+  manifest.keyExtras = manifest.keyExtras || {};
+  manifest.spotExtras = manifest.spotExtras || {};
+  manifest.hiddenPhotos = manifest.hiddenPhotos || {};
   const files = [];
   let count = 0;
   fs.mkdirSync(thumbs, { recursive: true });
 
   function save(item, baseName) {
+    if (!item) return null;
+    if (typeof item.src === 'string' && (item.src.startsWith('images/') || item.src.startsWith('/images/'))) {
+      count++;
+      return { src: item.src.replace(/^\//, ''), credit: item.credit || '' };
+    }
     const match = item && typeof item.src === 'string'
       ? /^data:image\/(jpeg|png);base64,([A-Za-z0-9+/]+={0,2})$/.exec(item.src) : null;
     if (!match) {
@@ -51,25 +60,81 @@ export function savePhotos(root, data) {
     return { src: relative, credit: credit || '직접 등록한 사진' };
   }
 
+  // 1. deletedPhotos 처리: manifest의 keys, keyExtras, spotExtras에서 제거
+  if (data.deletedPhotos) {
+    for (const deletedSrc of Object.keys(data.deletedPhotos)) {
+      for (const [k, p] of Object.entries(manifest.keys)) {
+        if (p && p.src === deletedSrc) {
+          delete manifest.keys[k];
+          count++;
+        }
+      }
+      for (const [k, arr] of Object.entries(manifest.keyExtras)) {
+        if (Array.isArray(arr)) {
+          const filtered = arr.filter(p => p.src !== deletedSrc);
+          if (filtered.length !== arr.length) {
+            manifest.keyExtras[k] = filtered;
+            count++;
+          }
+        }
+      }
+      for (const [s, arr] of Object.entries(manifest.spotExtras)) {
+        if (Array.isArray(arr)) {
+          const filtered = arr.filter(p => p.src !== deletedSrc);
+          if (filtered.length !== arr.length) {
+            manifest.spotExtras[s] = filtered;
+            count++;
+          }
+        }
+      }
+    }
+  }
+
+  // 2. hiddenPhotos 처리
+  if (data.hiddenPhotos) {
+    for (const [k, isHidden] of Object.entries(data.hiddenPhotos)) {
+      validId(k);
+      if (isHidden) {
+        manifest.hiddenPhotos[k] = true;
+        if (manifest.keys[k]) delete manifest.keys[k];
+        count++;
+      } else if (manifest.hiddenPhotos[k]) {
+        delete manifest.hiddenPhotos[k];
+        count++;
+      }
+    }
+  }
+
+  // 3. keys 처리
   for (const [key, item] of Object.entries(data.keys || {})) {
     validId(key);
-    manifest.keys[key] = save(item, `custom_key_${key}`);
+    const saved = save(item, `custom_key_${key}`);
+    if (saved) {
+      manifest.keys[key] = saved;
+      if (manifest.hiddenPhotos[key]) delete manifest.hiddenPhotos[key];
+    }
   }
+
+  // 4. keyExtras 처리
   for (const [key, items] of Object.entries(data.keyExtras || {})) {
     validId(key);
     if (!Array.isArray(items) || items.length > 4) throw new Error('항목별 사진은 최대 4장입니다.');
-    const added = items.map(item => save(item, `custom_key_${key}_extra_${randomUUID()}`));
+    const added = items.map(item => save(item, `custom_key_${key}_extra_${randomUUID()}`)).filter(Boolean);
     manifest.keyExtras[key] = (manifest.keyExtras[key] || []).concat(added).slice(-4);
   }
+
+  // 5. spotExtras 처리
   for (const [spotId, items] of Object.entries(data.spotExtras || {})) {
     validId(spotId);
     if (!Array.isArray(items) || items.length > 8) throw new Error('스팟별 사진은 최대 8장입니다.');
-    const added = items.map(item => save(item, `custom_spot_${spotId}_extra_${randomUUID()}`));
+    const added = items.map(item => save(item, `custom_spot_${spotId}_extra_${randomUUID()}`)).filter(Boolean);
     manifest.spotExtras[spotId] = (manifest.spotExtras[spotId] || []).concat(added).slice(-8);
   }
-  if (!count) throw new Error('반영할 사진이 없습니다. 먼저 사진을 등록해 주세요.');
+
+  if (!count) throw new Error('반영할 사진 변경사항이 없습니다.');
   fs.mkdirSync(path.dirname(manifestPath), { recursive: true });
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+
   return { count, files: [...new Set([
     'index.html', 'tools/serve.mjs', 'tools/photo-publish.mjs',
     'data/published-photos.json', ...files

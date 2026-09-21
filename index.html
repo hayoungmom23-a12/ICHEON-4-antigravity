@@ -41,7 +41,7 @@ a:hover{color:var(--accent-hover)}
 button{font-family:inherit}
 img{display:block}
 
-.page{max-width:640px;margin:0 auto;padding:16px 16px 28px;display:flex;flex-direction:column;gap:24px}
+.page{width:100%;max-width:960px;margin:0 auto;padding:16px 20px 36px;display:flex;flex-direction:column;gap:24px;box-sizing:border-box}
 .screen{display:flex;flex-direction:column;gap:24px}
 .screen.detail{gap:22px}
 .sub{font-size:12px;font-weight:700;color:var(--text-2);letter-spacing:.02em}
@@ -1043,7 +1043,9 @@ var isPublishing = false;
 function localPhotoCount(store) {
   return Object.keys(store.keys || {}).length +
     Object.values(store.keyExtras || {}).reduce(function (n, list) { return n + list.length; }, 0) +
-    Object.values(store.spotExtras || {}).reduce(function (n, list) { return n + list.length; }, 0);
+    Object.values(store.spotExtras || {}).reduce(function (n, list) { return n + list.length; }, 0) +
+    Object.keys(store.hiddenPhotos || {}).length +
+    Object.keys(store.deletedPhotos || {}).length;
 }
 function updateAdminBar(message) {
   var bar = document.getElementById('admin-bar');
@@ -1076,6 +1078,7 @@ function photoOf(key) {
   if (!key) return null;
   var store = getCustomStore();
   if (store.hiddenPhotos && store.hiddenPhotos[key]) return null;
+  if (publishedPhotos.hiddenPhotos && publishedPhotos.hiddenPhotos[key]) return null;
   if (store.keys && store.keys[key]) return store.keys[key];
   if (publishedPhotos.keys && publishedPhotos.keys[key]) return publishedPhotos.keys[key];
   return PHOTO[key] || null;
@@ -1093,7 +1096,13 @@ function getSpotExtraPhotos(spotId) {
 function getKeyExtraPhotos(key) {
   if (!key) return [];
   var store = getCustomStore();
-  return ((publishedPhotos.keyExtras || {})[key] || []).concat((store.keyExtras || {})[key] || []);
+  var pub = (publishedPhotos.keyExtras || {})[key] || [];
+  var loc = (store.keyExtras || {})[key] || [];
+  var merged = pub.concat(loc);
+  if (store.deletedPhotos) {
+    merged = merged.filter(function (p) { return !store.deletedPhotos[p.src]; });
+  }
+  return merged;
 }
 function saveKeyPhoto(key, src, credit) {
   var store = getCustomStore();
@@ -1328,6 +1337,7 @@ function closePhotoManager() {
     document.body.style.overflow = '';
   }
   currentPm = null;
+  autoSyncToServer();
 }
 
 function renderPhotoManager() {
@@ -2343,6 +2353,21 @@ if (adminResetButton) adminResetButton.addEventListener('click', function () {
   }
 });
 
+var syncTimer = null;
+function autoSyncToServer() {
+  if (syncTimer) clearTimeout(syncTimer);
+  syncTimer = setTimeout(function () {
+    var localServer = /^https?:$/.test(location.protocol) && /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    if (!localServer || isPublishing) return;
+    var store = getCustomStore();
+    var pending = localPhotoCount(store);
+    if (pending === 0) return;
+    if (adminPushButton && !adminPushButton.disabled) {
+      adminPushButton.click();
+    }
+  }, 1000);
+}
+
 /* ─────────────────────────────────────────────────────────
    라이트박스 모달 뷰어 제어 (와이드 슬라이더 캐러셀)
    ───────────────────────────────────────────────────────── */
@@ -2519,6 +2544,7 @@ document.getElementById('data-date').textContent = DATA_DATE;
 migrateSketchUploads();
 migrateDinoPhotos();
 migrateFarmparkParkingPhotos();
+setTimeout(autoSyncToServer, 1000);
 route();
 updateAdminBar();
 fetch('data/published-photos.json', { cache: 'no-store' })
