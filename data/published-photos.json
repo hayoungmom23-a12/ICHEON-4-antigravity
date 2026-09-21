@@ -15,6 +15,14 @@
     "wood_exterior": {
       "src": "images/thumbs/custom_key_wood_exterior.jpg",
       "credit": "직접 교체한 사진"
+    },
+    "farmpark": {
+      "src": "images/thumbs/custom_key_farmpark.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "rice_entrance": {
+      "src": "images/thumbs/custom_key_rice_entrance.jpg",
+      "credit": "직접 교체한 사진"
     }
   },
   "keyExtras": {},
