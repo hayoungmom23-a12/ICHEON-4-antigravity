@@ -935,6 +935,7 @@ var PHOTO = {
   wood:                  { src: 'images/spots/wood.jpg', credit: '이천목재문화체험장 전경' },
   dino:                  { src: 'images/spots/dino.jpg', credit: '덕평공룡수목원 입구' },
   ijin:                  { src: 'images/spots/ijin.jpg', credit: '이진상회 복합문화공간' },
+  spots5map:             { src: 'images/maps/spots-5-map.png', credit: '스팟 5곳 위치 안내 지도' },
   seolbongmap:           { src: 'design/설봉공원 약도(코덱스)-4x3.png', credit: '설봉공원 안내 약도' },
 
   // ── 실제 장소 실사 사진 (크롤링 및 수집 완료 에셋) ──────────────────
@@ -1598,9 +1599,11 @@ function renderList() {
         '</div>' + IC.chevR('#5C6470', 20) + '</a>';
     }).join('') + '</div></div>';
 
+  var spots5Map = photoOf('spots5map');
   h += '<div class="map-wrap"><div class="sub">스팟 5곳 위치 지도</div>' +
-    '<div class="spot-map-card" data-lb-src="images/maps/spots-5-map.png" data-lb-title="스팟 5곳 위치 안내 지도" data-lb-cap="설봉공원 이야기·문화 코스 운전자를 위한 주요 주차장·문화시설 안내 (터치하여 고화질 확대)" style="cursor:zoom-in;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);background:#FFFFFF;position:relative;" title="터치하여 지도 크게 보기">' +
-    '<img src="images/maps/spots-5-map.png" alt="스팟 5곳 위치 안내 지도" loading="lazy" style="width:100%;height:auto;display:block;border-radius:14px;">' +
+    '<div class="spot-map-card" data-lb-src="' + esc(spots5Map.src) + '" data-lb-title="스팟 5곳 위치 안내 지도" data-lb-cap="설봉공원 이야기·문화 코스 운전자를 위한 주요 주차장·문화시설 안내 (터치하여 고화질 확대)" style="cursor:zoom-in;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);background:#FFFFFF;position:relative;" title="터치하여 지도 크게 보기">' +
+    '<img src="' + esc(spots5Map.src) + '" alt="스팟 5곳 위치 안내 지도" loading="lazy" style="width:100%;height:auto;display:block;border-radius:14px;">' +
+    (isEditMode() ? '<button type="button" class="thumb-edit-btn" style="top:12px;right:12px;width:auto;height:32px;padding:0 11px;font-size:12px;" data-upload-key="spots5map" data-upload-replace="1" title="스팟 5곳 위치 지도 변경">📷 지도 교체</button>' : '') +
     '<span style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px);pointer-events:none;">🔍 터치하여 크게 보기</span>' +
     '</div></div>';
 
