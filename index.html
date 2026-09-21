@@ -1109,8 +1109,7 @@ function getSpotExtraPhotos(spotId) {
 function getKeyExtraPhotos(key) {
   if (!key) return [];
   var store = getCustomStore();
-  if (store.hiddenPhotos && store.hiddenPhotos[key]) return [];
-  if (publishedPhotos.hiddenPhotos && publishedPhotos.hiddenPhotos[key]) return [];
+  // Hiding a base photo must not hide newly added replacement photos under the same key.
   var pub = (publishedPhotos.keyExtras || {})[key] || [];
   var loc = (store.keyExtras || {})[key] || [];
   var merged = pub.concat(loc);

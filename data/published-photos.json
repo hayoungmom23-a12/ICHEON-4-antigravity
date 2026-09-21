@@ -126,7 +126,24 @@
         "credit": "직접 등록한 사진"
       }
     ],
-    "farmpark_forest": [],
+    "farmpark_forest": [
+      {
+        "src": "images/thumbs/custom_key_farmpark_forest_extra_4bcec665-60c3-49d2-beba-dcdd557dc59a.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_farmpark_forest_extra_391ba3e1-20d5-4132-9ffd-5de92e7dacae.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_farmpark_forest_extra_aedd6eff-baae-4c88-839e-1965349c1f3b.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_farmpark_forest_extra_606ab65f-d15c-4ca0-b9eb-cb84cd09c278.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
     "rice_fest": [
       {
         "src": "images/thumbs/custom_key_rice_fest_extra_56cacc21-7663-49c8-82b2-933af3d21eee.jpg",
