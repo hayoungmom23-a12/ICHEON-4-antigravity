@@ -113,6 +113,12 @@
         "src": "images/thumbs/custom_key_wood_parking_extra_c88abb15-c1f6-4c0d-95b0-71cee71e735c.jpg",
         "credit": "직접 등록한 사진"
       }
+    ],
+    "farmpark_parking_eco": [
+      {
+        "src": "images/thumbs/custom_key_farmpark_parking_eco_extra_f7f453ff-0e24-4657-b30d-5ad39d701796.jpg",
+        "credit": "직접 등록한 사진"
+      }
     ]
   },
   "spotExtras": {
