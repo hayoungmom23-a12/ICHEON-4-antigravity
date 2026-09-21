@@ -1612,9 +1612,10 @@ function renderDetail(course) {
 }
 
 function spotCard(s, ref, i, total) {
-  var open = !!state.expanded[i];
+  var open = (state.expanded && state.expanded[i] !== undefined) ? !!state.expanded[i] : true;
   var tips = (s.tips || []).map(tipParts);
   var photoObjs = getPhotosForTarget('spot', ref.id);
+  var extraPhotos = getSpotExtraPhotos(ref.id);
   var curSlide = (state.slide && state.slide[i]) || 0;
   if (curSlide >= photoObjs.length) {
     curSlide = Math.max(0, photoObjs.length - 1);
@@ -1705,9 +1706,7 @@ function spotCard(s, ref, i, total) {
         var isMapOpen = !!state.parkingMapOpen && !!state.parkingMapOpen[mapKey];
         var mapUrl = pk.placeId ? ('https://map.naver.com/p/entry/place/' + pk.placeId) : nmap(pk.q);
 
-        var btnHtml = hasMultiPin
-          ? '<button type="button" class="btn btn-auto' + (isMapOpen ? ' on' : '') + '" data-toggle-pmap="' + mapKey + '">' + (isMapOpen ? '지도 닫기' : '지도 열기') + '</button>'
-          : '<a class="btn btn-auto" href="' + esc(mapUrl) + '" target="_blank" rel="noopener">지도 열기</a>';
+        var btnHtml = '<button type="button" class="btn btn-auto' + (isMapOpen ? ' on' : '') + '" data-toggle-pmap="' + mapKey + '">' + (isMapOpen ? '지도 닫기' : '지도 열기') + '</button>';
 
         var mapBoxHtml = '';
         if (isSeolbongUpper && isMapOpen) {
@@ -1757,6 +1756,23 @@ function spotCard(s, ref, i, total) {
                 '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A2%85%ED%95%A9%EC%95%88%EB%82%B4%EC%84%BC%ED%84%B0" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 임시주차장 길찾기</a>' +
                 '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 생태2주차장 길찾기</a>' +
                 '<a href="https://map.naver.com/p/search/%EC%9D%B4%EC%B2%9C%EB%86%8D%EC%97%85%ED%85%8C%EB%A7%88%EA%B3%B5%EC%9B%90%20%ED%9B%84%EB%AC%B8" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ 후문주차장(숙박) 길찾기</a>' +
+              '</div>' +
+            '</div>';
+        } else if (isMapOpen) {
+          var pkCanvasId = 'pk-canvas-' + i + '-' + j;
+          var pkCoord = (COORDS && COORDS[ref.id]) || [37.23148, 127.33795];
+          var pkDirectUrl = pk.placeId ? ('https://map.naver.com/p/directions/,,/place/' + pk.placeId) : mapUrl;
+          mapBoxHtml = '<div class="park-map-wrap" style="margin:8px 0 12px;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#FFFFFF;border-bottom:1px solid var(--divider);font-size:12px;font-weight:700;color:var(--heading);">' +
+                '<span style="display:flex;align-items:center;gap:5px;">' +
+                  '<span style="background:var(--accent);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:800;">🅿️ 핀 1개</span>' +
+                  '<span>' + esc(pk.name) + ' 위치</span>' +
+                '</span>' +
+                '<a href="' + esc(mapUrl) + '" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-size:11px;font-weight:700;">네이버지도 크게 보기 ↗</a>' +
+              '</div>' +
+              '<div id="' + pkCanvasId + '" class="fac-map-canvas" data-fac-name="' + esc(pk.name) + '" data-fac-lat="' + pkCoord[0] + '" data-fac-lng="' + pkCoord[1] + '" data-fac-pid="' + (pk.placeId || '') + '" style="height:250px;width:100%;background:#F1EDE4;"></div>' +
+              '<div style="display:flex;gap:6px;padding:8px 10px;background:#FFFFFF;border-top:1px solid var(--divider);flex-wrap:wrap;">' +
+                '<a href="' + esc(pkDirectUrl) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:3px;padding:5px 10px;border-radius:6px;background:var(--accent-bg);color:var(--accent);font-size:11px;font-weight:700;text-decoration:none;">🅿️ ' + esc(pk.name) + ' 길찾기</a>' +
               '</div>' +
             '</div>';
         }
@@ -2463,7 +2479,12 @@ document.addEventListener('touchend', function (e) {
 function currentCourse() {
   var m = location.hash.match(/^#\/course\/([\w-]+)/);
   if (!m) return null;
-  return COURSES.filter(function (c) { return c.id === m[1]; })[0] || null;
+  var target = m[1];
+  var found = COURSES.filter(function (c) { return c.id === target; })[0];
+  if (found) return found;
+  var num = parseInt(target, 10);
+  if (!isNaN(num) && COURSES[num]) return COURSES[num];
+  return null;
 }
 function renderCurrent() {
   var course = currentCourse();
@@ -2687,15 +2708,25 @@ function drawSeolbongLowerMap(boxId) {
 }
 
 function drawFacilityMap(el) {
-  if (!el || !window.naver || !window.naver.maps) return;
-  if (el.dataset.mapRendered) return;
-  el.dataset.mapRendered = '1';
-
+  if (!el) return;
   var name = el.dataset.facName || '장소';
   var lat = parseFloat(el.dataset.facLat);
   var lng = parseFloat(el.dataset.facLng);
   var placeId = el.dataset.facPid || '';
   if (!lat || !lng) return;
+
+  if (!window.naver || !window.naver.maps) {
+    el.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;padding:16px;text-align:center;color:#4B5563;">' +
+      '<div style="font-size:26px;">📍</div>' +
+      '<b style="color:var(--heading);font-size:14px;">' + esc(name) + '</b>' +
+      '<span style="font-size:12px;color:var(--text-2);">네이버 지도 로딩 중… (새 창으로 바로 보기 가능)</span>' +
+      '<a href="' + (placeId ? ('https://map.naver.com/p/entry/place/' + placeId) : ('https://map.naver.com/p/search/' + encodeURIComponent(name))) + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:4px;padding:6px 14px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;">네이버지도 바로 보기 ↗</a>' +
+      '</div>';
+    return;
+  }
+  if (el.dataset.mapRendered) return;
+  el.dataset.mapRendered = '1';
+  el.innerHTML = '';
 
   var pos = new naver.maps.LatLng(lat, lng);
   var facMap = new naver.maps.Map(el, {
