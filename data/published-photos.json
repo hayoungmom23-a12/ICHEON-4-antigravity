@@ -97,6 +97,18 @@
         "src": "images/thumbs/custom_key_lake_extra_59ff2d64-79dd-4175-96da-fb5881992728.jpg",
         "credit": "직접 등록한 사진"
       }
+    ],
+    "woodcraft": [
+      {
+        "src": "images/thumbs/custom_key_woodcraft_extra_f4ad3f49-2b8e-4c75-aecc-acae3c4f9b05.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "wood_parking": [
+      {
+        "src": "images/thumbs/custom_key_wood_parking_extra_c88abb15-c1f6-4c0d-95b0-71cee71e735c.jpg",
+        "credit": "직접 등록한 사진"
+      }
     ]
   },
   "spotExtras": {
