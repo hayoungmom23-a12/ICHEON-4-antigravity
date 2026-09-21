@@ -1594,13 +1594,11 @@ function renderList() {
         '</div>' + IC.chevR('#5C6470', 20) + '</a>';
     }).join('') + '</div></div>';
 
-  h += '<div class="map-wrap"><div class="sub">스팟 5곳 위치</div>' +
-    (NAVER_MAP_CLIENT_ID
-      ? '<div id="naver-map"></div>'
-      : '<div class="map-ph"><div class="map-pins">' + [1, 2, 3, 4, 5].map(function () { return IC.pin(); }).join('') + '</div>' +
-        '<div>이천 지도 자리 (네이버지도 임베드)</div>' +
-        '<div style="font-size:11px">스크립트 상단 <code>NAVER_MAP_CLIENT_ID</code>에 키를 넣으면 지도가 켜집니다</div></div>') +
-    '</div>';
+  h += '<div class="map-wrap"><div class="sub">스팟 5곳 위치 지도</div>' +
+    '<div class="spot-map-card" data-lb-src="images/maps/spots-5-map.png" data-lb-title="스팟 5곳 위치 안내 지도" data-lb-cap="설봉공원 이야기·문화 코스 운전자를 위한 주요 주차장·문화시설 안내 (터치하여 고화질 확대)" style="cursor:zoom-in;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);background:#FFFFFF;position:relative;" title="터치하여 지도 크게 보기">' +
+    '<img src="images/maps/spots-5-map.png" alt="스팟 5곳 위치 안내 지도" loading="lazy" style="width:100%;height:auto;display:block;border-radius:14px;">' +
+    '<span style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px);pointer-events:none;">🔍 터치하여 크게 보기</span>' +
+    '</div></div>';
 
   h += '<div class="tiles">' +
     '<a class="tile" href="https://blog.naver.com/PostList.naver?blogId=2000happy_&amp;from=postList&amp;categoryNo=92" target="_blank" rel="noopener"><b>이천시 공식 블로그</b><span>blog.naver.com · 여행 소식</span></a>' +
