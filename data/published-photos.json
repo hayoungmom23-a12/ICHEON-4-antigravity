@@ -23,9 +23,82 @@
     "rice_entrance": {
       "src": "images/thumbs/custom_key_rice_entrance.jpg",
       "credit": "직접 교체한 사진"
+    },
+    "dino_terrace": {
+      "src": "images/thumbs/custom_key_dino_terrace.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "dino_pond": {
+      "src": "images/thumbs/custom_key_dino_pond.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "seolbong_parking_upper": {
+      "src": "images/thumbs/custom_key_seolbong_parking_upper.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "seolbong_parking_lower": {
+      "src": "images/thumbs/custom_key_seolbong_parking_lower.jpg",
+      "credit": "직접 교체한 사진"
+    },
+    "woljeon_art": {
+      "src": "images/thumbs/custom_key_woljeon_art.jpg",
+      "credit": "직접 교체한 사진"
     }
   },
-  "keyExtras": {},
+  "keyExtras": {
+    "seolbong_parking_upper": [
+      {
+        "src": "images/thumbs/custom_key_seolbong_parking_upper_extra_31658344-d968-439c-a40a-742401251e0f.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "seolbong_parking_lower": [
+      {
+        "src": "images/thumbs/custom_key_seolbong_parking_lower_extra_b3618bcb-7662-45d4-a733-253e1e1818f0.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "woljeon_art": [
+      {
+        "src": "images/thumbs/custom_key_woljeon_art_extra_bc4babe9-2bdc-4401-9b15-7e480eaad143.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_woljeon_art_extra_b46bac09-5c68-4788-97bb-f7ef7581174d.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "seolbong_play": [
+      {
+        "src": "images/thumbs/custom_key_seolbong_play_extra_d3828058-4a91-4a7d-9fdc-ad94909ee565.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_seolbong_play_extra_c97770db-5c0a-481c-b63d-bdfb1f69e80d.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "seolbong_sculpture": [
+      {
+        "src": "images/thumbs/custom_key_seolbong_sculpture_extra_957d2730-5a34-4452-8955-bae412a641f2.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ],
+    "lake": [
+      {
+        "src": "images/thumbs/custom_key_lake_extra_3d11d6e0-f701-4999-aae6-ea2bcddeb5c6.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_lake_extra_4130a2b3-4373-4e7c-a03e-c91a361a8c52.jpg",
+        "credit": "직접 등록한 사진"
+      },
+      {
+        "src": "images/thumbs/custom_key_lake_extra_59ff2d64-79dd-4175-96da-fb5881992728.jpg",
+        "credit": "직접 등록한 사진"
+      }
+    ]
+  },
   "spotExtras": {
     "dino": [],
     "ijin": [
