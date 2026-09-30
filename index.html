@@ -6,6 +6,8 @@
 <title>이천 아이맵</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap">
+<link rel="stylesheet" href="assets/vendor/leaflet.css">
+<script src="assets/vendor/leaflet.js"></script>
 <!--
   이천 아이맵 · 구현 기준 정적 시안 (2026-09-18)
   ─────────────────────────────────────────────────────────
@@ -89,9 +91,90 @@ img{display:block}
 
 /* ── 지도 ──────────────────────────────────────────────── */
 .map-wrap{display:flex;flex-direction:column;gap:12px}
-#naver-map{height:288px;border-radius:12px;overflow:hidden;background:var(--photo)}
+#naver-map{height:320px;border-radius:14px;overflow:hidden;background:var(--photo);border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
 .map-ph{min-height:288px;border-radius:12px;border:1px dashed #D9D1C1;background:var(--photo);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-3);font-size:13px;text-align:center;padding:16px}
 .map-pins{display:flex;gap:14px}
+
+/* Leaflet 핀 및 레이아웃 커스텀 스타일 */
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+.custom-park-pin {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.25));
+  white-space: nowrap;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  transition: transform .15s ease;
+}
+.custom-park-pin:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.custom-park-pill {
+  background: #0F6E56;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  font-family: Pretendard, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.custom-park-pill .badge-p {
+  background: #FFFFFF;
+  color: #0F6E56;
+  font-size: 10px;
+  font-weight: 900;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.custom-spot-div {
+  background: transparent !important;
+  border: none !important;
+}
+.custom-spot-pin {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+  white-space: nowrap;
+  user-select: none;
+  transform: translate(-50%, -100%);
+  transition: transform .15s ease;
+}
+.custom-spot-pin:hover {
+  transform: translate(-50%, -100%) scale(1.08);
+}
+.custom-spot-badge {
+  background: #FFFFFF;
+  border: 1.5px solid #0F6E56;
+  color: #0F6E56;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.3;
+  font-family: Pretendard, sans-serif;
+}
+.custom-spot-badge.terminal {
+  background: #1E293B;
+  border: 1.5px solid #0F172A;
+  color: #FFFFFF;
+}
 
 /* ── 바깥 링크 타일 ─────────────────────────────────────── */
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
@@ -1613,7 +1696,7 @@ function renderList() {
     '</div>';
 
   document.getElementById('screen-list').innerHTML = h;
-  if (NAVER_MAP_CLIENT_ID) initMap();
+  initMap();
 }
 
 /* ─────────────────────────────────────────────────────────
